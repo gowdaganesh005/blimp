@@ -1,3 +1,4 @@
+import Button from "./Button"
 function Navbar(){
     return(
         <>
@@ -8,7 +9,7 @@ function Navbar(){
                         BLIMP
                     </div>
                     <div className="text-xl px-4 font-bold ">
-                        SignIn
+                        <Button name="SignIn" />
                     </div>
                 </div>
             </div>

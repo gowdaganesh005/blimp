@@ -1,5 +1,20 @@
-import { Prisma } from "@prisma/client";
+import prisma from "@/prisma/db" 
+import { NextResponse } from "next/server"
 
-export default async function GET(){
-    await 
+export async function GET(){
+    try{
+        const post =await prisma.post.findMany({
+            include:{
+                user:true
+            }
+        })
+        return NextResponse.json(post)
+
+    }catch(error){
+        
+        return NextResponse.json({
+            data:error
+        })
+    }
+     
 }

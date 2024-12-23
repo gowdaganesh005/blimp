@@ -3,6 +3,7 @@ import { ProfileCard } from "./ProfileCard"
 import { PostCard } from "./PostCard"
 import {  Post } from "./Post"
 import { Trending } from "./Trending"
+import Feed from "./Feed"
 
 function MainPage({children}:{children:ReactNode}){
     return(
@@ -14,7 +15,7 @@ function MainPage({children}:{children:ReactNode}){
             <div className="col-span-6 mx-1 h-full  ">
                     <PostCard />
                     <div className="max-h-[calc(100vh-200px)] overflow-y-auto scroll-smooth  scrollbar-hidden ">
-                        
+                        <Feed/>
                     </div>
             </div>
             <div className="col-span-2 mx-1 mr-2">

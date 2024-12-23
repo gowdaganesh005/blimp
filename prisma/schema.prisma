@@ -27,7 +27,7 @@ model Post{
   user             User  @relation(fields: [userId] ,references: [userId])
   userId           String
   content          String
-  Num_likes        Int @default(0)
+  Num_Likes        Int @default(0)
   Num_Comments     Int @default(0)
   Num_Repost       Int @default(0)
 
