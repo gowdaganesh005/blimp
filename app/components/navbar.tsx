@@ -1,12 +1,26 @@
 "use client"
 import { useRouter } from "next/navigation"
 import Button from "./Button"
-import { useSession } from "next-auth/react"
-import NextAuth from "../lib/NextAuth"
+import { signOut, useSession } from "next-auth/react"
+import { useState } from "react"
+import { toast } from "react-toastify"
+
 function Navbar(){
     const router=useRouter()
-    const session=useSession()
-    
+    const {data:session,status}= useSession()
+    const LogOut=async ()=>{
+        try{
+        await signOut()
+        
+        }catch(error){
+            toast.error("Error while Logging Out")
+            return
+        }
+        console.log("log out")
+
+    }
+    console.log("rendering")
+
     return(
         
         <>
@@ -17,8 +31,14 @@ function Navbar(){
                         BLIMP
                     </div>
                     <div className="text-xl px-4 font-bold ">
-                        <Button name="SignIn" handler={()=>(router.push("/signin"))} className="mx-1"/>
-                        <Button name="SignUp" handler={()=>(router.push("/signup"))} />
+                        {
+                            !(status==="authenticated")?(
+                            <>
+                                <Button name="SignIn" handler={()=>(router.push("/signin"))} className="mx-1"/>
+                                <Button name="SignUp" handler={()=>(router.push("/signup"))} />
+                            </>)
+                            :   <Button name="LogOut" handler={LogOut}/>
+                        }
                     </div>
                 </div>
             </div>

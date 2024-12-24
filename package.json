@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/spinner": "^2.2.5",
     "@prisma/client": "^6.1.0",
     "@types/axios": "^0.14.4",
     "@types/bcrypt": "^5.0.2",

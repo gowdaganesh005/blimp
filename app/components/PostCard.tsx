@@ -1,6 +1,9 @@
+"use client"
+import { useRouter } from "next/navigation"
 import Card from "./Card"
 
 function PostCard(){
+    const router=useRouter()
     return(
         <>
         <div className="mr-1">
@@ -36,7 +39,9 @@ function PostCard(){
                 </svg>
 
 
-                <button className="relative right-1 py-2 bg-gray-800 px-2 rounded "> SignUp</button>
+                <button className="relative right-1 py-2 bg-gray-800 px-2 rounded "
+                onClick={()=>router.push("/signin")}
+                > SignUp</button>
                 </div>
             </div>
         </Card>
