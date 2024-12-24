@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/navbar";
+import { ToastContainer } from "react-toastify";
+import SessionWraper from "./components/SessionWrappers";
 
 
 const geistSans = Geist({
@@ -27,11 +29,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black h-screen w-screen`}
       >
         
+        
+        <ToastContainer theme="dark"/>
+        <SessionWraper>
         <Navbar/>
         {children}
+        </SessionWraper>
+        
         
       </body>
     </html>
