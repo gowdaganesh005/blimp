@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 import LikeButton from "./LikeButton"
 
 
-export function Post({postId,fullName,username,content,likes,comments,repost}:{
+export function Post({postId,fullName,username,content,likes,comments,repost,isLiked}:{
     postId:string
     fullName:string
     username:string 
@@ -15,6 +15,7 @@ export function Post({postId,fullName,username,content,likes,comments,repost}:{
     comments: number
     likes: number
     repost: number
+    isLiked:boolean
 }){
     
     
@@ -55,7 +56,7 @@ export function Post({postId,fullName,username,content,likes,comments,repost}:{
                 <div className="py-3 flex justify-between">
                     
                     <div className="flex flex-col items-center w-fit ">
-                        <LikeButton postId={postId} likes={likes}/>
+                        <LikeButton postId={postId} likes={likes} isLiked={isLiked}/>
                     </div>
                     
                     <div className="flex flex-col items-center w-fit mx-3">

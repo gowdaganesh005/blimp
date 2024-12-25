@@ -1,7 +1,9 @@
+import { pushLike } from "@/app/lib/bullMQ";
 import NextAuth from "@/app/lib/NextAuth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "redis";
+
 
 const client=createClient()
 try {
@@ -14,15 +16,12 @@ try {
 export async function POST(req:NextRequest){
     try {
         const {user}=await getServerSession(NextAuth)
-        const {postId}=await req.json()
+        const {postId,liked}=await req.json()
         console.log(postId)
+        const userId=user.userId
         
-        const data={
-            userId:user.userId,
-            postId:postId
-        }
         
-        await client.lPush("likesQueue",JSON.stringify(data))
+        await pushLike({userId,postId,liked})
         return NextResponse.json({message:"success"})
 
     } catch (error) {

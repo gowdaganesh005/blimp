@@ -1,10 +1,28 @@
 
 import axios from "axios"
 import { Post } from "./Post"
+import { getServerSession } from "next-auth"
+import NextAuth from "../lib/NextAuth"
+
 
 export default async function Feed(){
-    const {data}:any=await axios("http://localhost:3000/api/getFeed")
-    // console.log(data)
+    let res
+    try {
+        const {user}=await getServerSession(NextAuth)
+        res=await axios.post("http://localhost:3000/api/getFeed",{userId:user.userId})
+
+    } catch(error){
+        res=await axios.get("http://localhost:3000/api/getFeed")
+    }
+
+    const {data}=res
+    
+    
+    
+    
+    
+    
+    
     
  
     return(
@@ -20,6 +38,7 @@ export default async function Feed(){
                     likes={post.Num_Likes}
                     comments={post.Num_Comments}
                     repost={post.Num_Repost}
+                    isLiked={post.isLiked}
                 />
                 
             ))):(<div>{"Could not fetch posts"}</div>)

@@ -6,14 +6,17 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 
 
-enum like{
+enum likecolor{
     none="none",
     red="red"
 }
-export default function LikeButton({postId,likes}:{postId:string,likes:number}){
+
+
+export default function LikeButton({postId,likes,isLiked}:{postId:string,likes:number,isLiked:boolean}){
     const router=useRouter()
     const [curLikes,setCurLikes]=useState(likes)
-    const [likedButton,setLikedButton]=useState<like>(like.none)
+    const [like,setLike]=useState(isLiked)
+    
     const {data:session,status}=useSession()
     
     const likeing=async ()=>{
@@ -23,11 +26,11 @@ export default function LikeButton({postId,likes}:{postId:string,likes:number}){
             router.push("/signin")
             return 
         }
+        setLike(prev=>!prev)
         
-        setLikedButton(()=>(likedButton===like.none?like.red:like.none))
-        setCurLikes((prev)=>(likedButton===like.none?prev+1:prev-1))
+        setCurLikes((prev)=>(!like?prev+1:prev-1))
         try {
-            await axios.post("http://localhost:3000/api/like",{postId})
+            await axios.post("http://localhost:3000/api/like",{postId,liked:like})
             return
         } catch (error) {
             console.log(error)
@@ -41,10 +44,10 @@ export default function LikeButton({postId,likes}:{postId:string,likes:number}){
         <div>
         <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            fill={likedButton}
+            fill={(like?likecolor.red:likecolor.none)}
             viewBox="0 0 24 24"
             strokeWidth={1.5} 
-            stroke={likedButton==="red"?"red":"currentColor"} 
+            stroke={like?likecolor.red:"currentColor"} 
             className="size-6 user-select-none"
             onClick={likeing}
             >
