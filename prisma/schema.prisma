@@ -20,6 +20,7 @@ model User{
   email     String @unique
   password  String
   Posts     Post[]
+  Likes     Likes[]
 }
 
 model Post{
@@ -30,7 +31,18 @@ model Post{
   Num_Likes        Int @default(0)
   Num_Comments     Int @default(0)
   Num_Repost       Int @default(0)
+  Likes            Likes[]
 
 
+}
+
+model Likes{
+  likeId String @id @default(uuid())
+  post   Post   @relation(fields: [postId],references: [postId])
+  postId String 
+  user   User   @relation(fields: [userId],references: [userId])
+  userId String
+
+  @@unique([userId,postId])
 }
 

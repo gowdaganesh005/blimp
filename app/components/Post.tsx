@@ -1,5 +1,14 @@
+"use client"
+import { useState } from "react"
 import Card from "./Card"
-export function Post({fullName,username,content,likes,comments,repost}:{
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { toast } from "react-toastify"
+import LikeButton from "./LikeButton"
+
+
+export function Post({postId,fullName,username,content,likes,comments,repost}:{
+    postId:string
     fullName:string
     username:string 
     content: string 
@@ -7,6 +16,8 @@ export function Post({fullName,username,content,likes,comments,repost}:{
     likes: number
     repost: number
 }){
+    
+    
     return(
         <>
         <div className="w-[99.7%]">
@@ -28,9 +39,9 @@ export function Post({fullName,username,content,likes,comments,repost}:{
                         <div className="px-2 font-medium">
                             {fullName}
                         </div>
-                        <div className=" px-2  font-thin text-xs py-1">
+                        {/* <div className=" px-2  font-thin text-xs py-1">
                             2 mins ago
-                        </div>
+                        </div> */}
                     </div>
                     <div className="px-2 font-thin text-xs ">
                         {`@${username}`}
@@ -42,23 +53,11 @@ export function Post({fullName,username,content,likes,comments,repost}:{
                     {content}
                 </div>
                 <div className="py-3 flex justify-between">
+                    
                     <div className="flex flex-col items-center w-fit ">
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5} 
-                            stroke="currentColor" 
-                            className="size-6">
-                        <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                        </svg>
-                        <div>
-                        { likes } Likes
-                        </div>
+                        <LikeButton postId={postId} likes={likes}/>
                     </div>
+                    
                     <div className="flex flex-col items-center w-fit mx-3">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 

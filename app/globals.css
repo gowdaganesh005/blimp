@@ -24,3 +24,9 @@ textarea{
     resize: none;
     overflow: hidden;
 }
+
+.user-select-none{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}

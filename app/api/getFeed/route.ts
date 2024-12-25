@@ -5,7 +5,13 @@ export async function GET(){
     try{
         const post =await prisma.post.findMany({
             include:{
-                user:true
+                user:{
+                    select:{
+                        userId:true,
+                        username:true,
+                        fullName:true
+                    }
+                }
             }
         })
         return NextResponse.json(post)
