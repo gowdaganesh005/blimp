@@ -24,6 +24,12 @@ const NextAuth={
                     const user=await prisma.user.findFirst({
                         where:{
                             username:credentials?.username,  
+                        },
+                        select:{
+                            fullName:true,
+                            userId:true,
+                            username:true,
+                            password:true
                         }
                         
                     })
@@ -72,7 +78,7 @@ const NextAuth={
             if(token){
                 session.user.userId=token.userId,
                 session.user.username=token.username,
-                session.user.fullName=token.fullname
+                session.user.fullName=token.fullName
             }
             return session
         }

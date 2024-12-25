@@ -3,7 +3,7 @@ import Card from "./Card"
 function ProfileCard(){
     return(
         <>
-        <div className="col-span-2  ">
+        <div className="col-span-2 min-w-md ">
         <Card>
             <div className="h-full text-gray-300">
                 <div className="h-20 bg-black w-full rounded-t-md">
