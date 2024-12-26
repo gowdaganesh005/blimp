@@ -40,7 +40,7 @@ export async function POST(req:NextRequest){
         console.log(error?.message)
         return NextResponse.json({
             data:error
-        })
+        },{status:500})
     }
      
 }

@@ -16,6 +16,7 @@ try {
 export async function POST(req:NextRequest){
     try {
         const {user}=await getServerSession(NextAuth)
+        console.log(user)
         const {postId,liked}=await req.json()
         console.log(postId)
         const userId=user.userId
