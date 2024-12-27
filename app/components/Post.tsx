@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import LikeButton from "./LikeButton"
+import CommentButton from "./commentButton"
 
 
 export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className}:{
@@ -24,7 +25,9 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
     
     return(
         <>
-        <div className={` w-[99.7%]`}>
+        <div 
+        
+        className={` w-[99.7%]`}>
         <Card className={`${className}`}>
             <div
             onClick={()=>router.push(`/dashboard?userId=${userId}`)}
@@ -55,7 +58,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                 </div>
             </div>
             <div className="pl-12 text-gray-300">
-                <div>
+                <div onClick={()=>router.push(`/viewPost?postId=${postId}`)}>
                     {content}
                 </div>
                 <div className="py-3 flex justify-between">
@@ -65,7 +68,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     </div>
                     
                     <div className="flex flex-col items-center w-fit mx-3">
-                        
+                        <CommentButton num={comments} postId={postId}/>
                     </div>
                     <div className="flex flex-col items-center w-fit mx-3">
                         <svg 

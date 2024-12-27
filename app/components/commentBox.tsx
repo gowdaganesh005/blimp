@@ -3,17 +3,18 @@ import { useState } from "react";
 import Button from "./Button";
 
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-export default function CommentBox(){
+
+export default  function CommentBox({postId,username,userId,fullName}:{postId:string,username:string,userId:string,fullName:string}){
     const router=useRouter()
     const [comment,setComment]=useState("")
     const submit=async ()=>{
         try{
-            const res=await axios.post("http://localhost:3000/api/createComment")
+            const res=await axios.post("http://localhost:3000/api/createComment",{postId,comment})
             if(res.status===200){
-                router.push("/viewPost")
+                router.push(`/viewPost?postId=${postId}`)
                 return
             }
         }catch(error){
@@ -25,7 +26,7 @@ export default function CommentBox(){
         <>
         <div>
            <div
-            // onClick={()=>router.push(`/dashboard?userId=${userId}`)}
+            onClick={()=>router.push(`/dashboard?userId=${userId}`)}
             className="p-1 flex text-gray-200 overflow-y-auto ">
                 <svg xmlns="http://www.w3.org/2000/svg" 
                     fill="black" 
@@ -41,14 +42,14 @@ export default function CommentBox(){
                 <div className="w-full">
                     <div className="flex justify-between w-full">
                         <div className="px-2 font-medium">
-                            {"Elon Musk"}
+                            {fullName}
                         </div>
                         {/* <div className=" px-2  font-thin text-xs py-1">
                             2 mins ago
                         </div> */}
                     </div>
                     <div className="px-2 font-thin text-xs ">
-                        {`@${"elonmusk"}`}
+                        {`@${username}`}
                     </div>
                 </div>
             </div>
@@ -69,7 +70,7 @@ export default function CommentBox(){
                        </svg>
                    </div>
 
-                   <Button name="Post" />
+                   <Button name="Post" handler={submit}/>
                    </div>
 
 

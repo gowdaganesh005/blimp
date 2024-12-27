@@ -12,7 +12,7 @@ export default async  function  findUserInfo(followeeId:string,followerId?:strin
                     userId:followeeId
                 },
                 select:{
-                    
+                    userId:true,
                     username:true,
                     fullName:true,
                     followerCount:true,

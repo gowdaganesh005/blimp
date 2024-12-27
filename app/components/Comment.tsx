@@ -1,22 +1,24 @@
-import { Post } from "./Post";
+import findUserInfo from "../lib/serverActions/findUserInfo";
+import { CommentLayout } from "./Commentlayout";
 
-export default function comment(){
+
+export default async function comment(data:any){
+    const user=await findUserInfo(data.userId)
+    console.log(data.data)
     return(
         <>
-        <Post
+        
+        {data?(user?(<CommentLayout
             
-            // key={post.postId}
+            key={data.postId}
             
-            userId={""}
-            postId={""} 
-            fullName={"Elon Musk"} 
-            username={"elonmusk"} 
-            content={"loremkfjakdfjak kdfjak dkdkfjklalkdjfklajdf akjsdf sdlkfjakdjfa kfjakld jfklajdf;d fkadjsfkajdf sdkfjaskldfjd kfakld adfkljafkdjalskd dflklasjdfklsjdadskld f"} 
-            likes={4}
-            comments={0}
-            repost={2}
-            isLiked={true}
-        />
+            userId={user?.userId || ""}
+            postId={data.data.postId} 
+            fullName={user.fullName || ""} 
+            username={user.username || ""} 
+            content={data.data.comment} 
+            
+        />):<></>):<></>}
 
         
         </>

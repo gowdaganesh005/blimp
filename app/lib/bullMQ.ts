@@ -32,4 +32,17 @@ export async function pushFollow({followerId,followeeId}:{followerId:string,foll
     } catch (error) {
         return false
     }
+
+
+}
+
+export async function pushComment(data:{postId:string,userId:string,comment:any}){
+    console.log(data)
+    try {
+        await WorkerQueue.add("commentQueue",data)
+        return
+    } catch (error) {
+        console.log(error)
+        return 
+    }
 }

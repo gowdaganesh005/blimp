@@ -23,6 +23,7 @@ model User{
   followingCount  Int @default(0)
   Posts           Post[]
   Likes           Likes[]
+  Comments        Comments[]
   following       Following[] @relation("Following") 
   followee        Following[] @relation("Followed")
 }
@@ -36,6 +37,7 @@ model Post{
   Num_Comments     Int @default(0)
   Num_Repost       Int @default(0)
   Likes            Likes[]
+  Comments         Comments[]
   
 
 
@@ -59,3 +61,12 @@ model Following{
   followeeId String
 }
 
+model Comments{
+  commentId String @id @default(uuid())
+  post  Post @relation(fields: [postId],references: [postId])
+  postId String 
+  user  User @relation(fields: [userId],references: [userId])
+  userId String
+  comment String 
+
+}

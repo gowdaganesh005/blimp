@@ -1,7 +1,11 @@
-export default async function commmentButton(){
+"use client"
+import { redirect, useRouter } from "next/navigation";
+
+export default function commentButton({num,postId}:{num:number,postId:string}){
+    const router=useRouter()
     return (
         <>
-        <div >
+        <div onClick={()=>router.push(`/createComment?postId=${postId}`)} >
         <svg 
             xmlns="http://www.w3.org/2000/svg" 
             fill="none" 
@@ -16,7 +20,7 @@ export default async function commmentButton(){
         </svg>
 
         <div>
-        { 32 } Comments
+        { num } Comments
         </div>
         </div>
         </>
