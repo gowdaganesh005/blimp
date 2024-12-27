@@ -1,4 +1,4 @@
-import findUser from "@/app/lib/serverActions/findUser";
+
 import prisma from "@/prisma/db";
 import { HttpStatusCode } from "axios";
 import { signIn } from "next-auth/react";

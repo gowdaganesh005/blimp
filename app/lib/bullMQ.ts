@@ -20,3 +20,16 @@ export async function pushLike({userId,postId,liked}:{userId:string,postId:strin
     }
     
 }
+
+export async function pushFollow({followerId,followeeId}:{followerId:string,followeeId:string}){
+    const data={
+        followeeId,
+        followerId
+    }
+    try {
+        await WorkerQueue.add("followQueue",data)
+        return true
+    } catch (error) {
+        return false
+    }
+}

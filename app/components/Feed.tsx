@@ -3,6 +3,8 @@ import axios from "axios"
 import { Post } from "./Post"
 import { getServerSession } from "next-auth"
 import NextAuth from "../lib/NextAuth"
+import { isAnyArrayBuffer } from "util/types"
+import { isArray } from "util"
 
 
 export default async function Feed(){
@@ -16,6 +18,7 @@ export default async function Feed(){
     }
 
     const {data}=res
+    console.log(data)
     
     
     
@@ -28,9 +31,10 @@ export default async function Feed(){
     return(
         <>
         {
-            (!(data?.data?.code))?(data?.map((post:any)=>(
+            (data[0]?.postId)?(data?.map((post:any)=>(
                 <Post
                     key={post.postId}
+                    userId={post.user.userId}
                     postId={post.postId} 
                     fullName={post.user.fullName} 
                     username={post.user.username} 

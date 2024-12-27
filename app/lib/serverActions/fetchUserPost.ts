@@ -11,7 +11,7 @@ export async function fetchUserPosts(userId:string){
         console.log(user)
         const post =await prisma.post.findMany({
             where:{
-                userId:user.userId
+                userId:userId
             },
             include:{
                 user:{

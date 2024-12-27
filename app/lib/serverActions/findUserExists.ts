@@ -4,7 +4,7 @@ import prisma from "@/prisma/db"
 
 
 
-export default async  function  findUser(field:string,value:string){
+export default async  function  findUserExists(field:string,value:string){
     let exists
     if(field=="email"){
         exists=await prisma.user.findFirst({

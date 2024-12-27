@@ -6,19 +6,31 @@ import { Post } from "../components/Post";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import { fetchUserPosts } from "../lib/serverActions/fetchUserPost";
-
-const data=await getServerSession(NextAuth)
-
-
+import { Follow } from "../components/Follow";
+import findUserInfo from "../lib/serverActions/findUserInfo";
 
 
-export default async  function Dashboard(){
+
+
+
+
+export default async  function Dashboard({searchParams}:any){
+    const data=await getServerSession(NextAuth)
+    const params=await searchParams
+    const {userId}=params
+    
+
     if(!data){
         redirect("/signin")
     }
     const {user}=data
+    const viewUser=await findUserInfo(userId,user.userId)
+    console.log(viewUser)
 
-    const posts:any=await fetchUserPosts(user.userId)
+    const posts:any=await fetchUserPosts(userId)
+
+    const isOwnUser=(user.userId===userId)
+
     
     
     // let posts;
@@ -27,8 +39,8 @@ export default async  function Dashboard(){
             <div className="w-full flex flex-col items-center text-gray-300">
                 <Card className="max-w-md bg-gray-800 ">
                     <div className="p-3">
-                        <div className="text-2xl px-3 font-extrabold">My Profile</div>
-                        <div className="w-full h-0.5 bg-gray-600"></div>
+                        
+                        <div className="flex justify-between">
                         <div className="flex">
                         <svg xmlns="http://www.w3.org/2000/svg" 
                             fill="black" 
@@ -42,16 +54,20 @@ export default async  function Dashboard(){
                             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         <div>
-                        <div className="font-bold text-3xl pt-3 px-2">Elon Musk</div>
-                        <div className="px-2 font-semibold ">@elonmusk</div>
+                        <div className="font-bold text-3xl pt-3 px-2">{viewUser?.fullName}</div>
+                        <div className="px-2 font-semibold ">@{viewUser?.username}</div>
                         </div>
+                        
+                        </div>
+                        {isOwnUser?(<></>):(<div><Follow followeeId={userId || ""} followed={viewUser?.followed|| false}/></div>)}
+                        
                         </div>
                         <div className="flex px-3">
                             <div className="pr-4 text-lg">
-                                { 32 } Following
+                                { viewUser?.followerCount } Followers
                             </div>
                             <div className="pr-4 text-lg">
-                                { 10 } Followers
+                                { viewUser?.followingCount } Following
                             </div>
                         </div>
                         <div className="w-full h-0.5 bg-gray-600"></div>
@@ -64,8 +80,9 @@ export default async  function Dashboard(){
                             (posts?(posts?.map((post:any)=>(
                                 
                                 <Post 
-                                
+
                                     key={post.postId}
+                                    userId={post.user.userId}
                                     postId={post.postId} 
                                     fullName={post.user.fullName} 
                                     username={post.user.username} 

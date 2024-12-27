@@ -5,7 +5,7 @@ import { Form,Field } from "../components/Form";
 import { useRouter } from "next/navigation";
 import Card from "../components/Card";
 import prisma from "@/prisma/db";
-import findUser from "../lib/serverActions/findUser";
+import findUser from "../lib/serverActions/findUserExists";
 import axios from "axios";
 import { toast } from "react-toastify";
 
