@@ -80,7 +80,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     <div className="flex flex-col items-center w-fit mx-3">
                         <CommentButton num={comments} postId={postId}/>
                     </div>
-                    <div className="flex flex-col items-center w-fit mx-3">
+                    {/* <div className="flex flex-col items-center w-fit mx-3">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -99,7 +99,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                         <div>
                         { repost } Repost
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col items-center w-fit mx-5">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 

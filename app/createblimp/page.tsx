@@ -50,7 +50,7 @@ export default function createBlimp(){
             if(file){
                 form.append("image",file)
             }
-            const res=await axios.post("http://localhost:3000/api/createPost" ,form,{
+            const res=await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/createPost` ,form,{
                 headers:{
                     "Content-Type":"multipart/form-data"
                 }

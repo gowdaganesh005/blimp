@@ -11,10 +11,10 @@ export default async function Feed(){
     let res
     try {
         const {user}=await getServerSession(NextAuth)
-        res=await axios.post("http://localhost:3000/api/getFeed",{userId:user.userId})
+        res=await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getFeed`,{userId:user.userId})
 
     } catch(error){
-        res=await axios.get("http://localhost:3000/api/getFeed")
+        res=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getFeed`)
     }
 
     const {data}=res

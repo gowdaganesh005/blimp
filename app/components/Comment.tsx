@@ -10,7 +10,7 @@ export default async function comment(data:any){
         
         {data?(user?(<CommentLayout
             
-            key={data.postId}
+            key={data.commentId}
             
             userId={user?.userId || ""}
             postId={data.data.postId} 

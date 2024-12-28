@@ -80,7 +80,7 @@ export default function SignUp(){
             }
             Userdata.username=username
             const {password}=Userdata
-            const res=await axios.post("http://localhost:3000/api/auth/signup",Userdata)
+            const res=await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signup`,Userdata)
             if (res.status==200){
                 const signInRes=await signIn("credentials",{
                     redirect:false,

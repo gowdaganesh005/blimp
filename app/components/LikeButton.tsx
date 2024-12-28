@@ -30,7 +30,7 @@ export default function LikeButton({postId,likes,isLiked}:{postId:string,likes:n
         
         setCurLikes((prev)=>(!like?prev+1:prev-1))
         try {
-            await axios.post("http://localhost:3000/api/like",{postId,liked:like})
+            await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/like`,{postId,liked:like})
             return
         } catch (error) {
             console.log(error)

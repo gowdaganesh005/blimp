@@ -12,7 +12,7 @@ export default  function CommentBox({postId,username,userId,fullName}:{postId:st
     const [comment,setComment]=useState("")
     const submit=async ()=>{
         try{
-            const res=await axios.post("http://localhost:3000/api/createComment",{postId,comment})
+            const res=await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/createComment`,{postId,comment})
             if(res.status===200){
                 router.push(`/viewPost?postId=${postId}`)
                 return

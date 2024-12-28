@@ -20,7 +20,7 @@ export function Follow({followeeId,followed}:{followeeId:string,followed:boolean
         }
         setfollow(prev=>!prev)
         try {
-            await axios.post("http://localhost:3000/api/follow",{followeeId})
+            await axios.post(`"${process.env.NEXT_PUBLIC_BASE_URL}/api/follow`,{followeeId})
             return
         } catch(error){
             console.log(error)
