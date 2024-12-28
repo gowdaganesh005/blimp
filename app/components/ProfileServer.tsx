@@ -5,6 +5,9 @@ import findUserInfo from "../lib/serverActions/findUserInfo";
 
 export default async function ProfileComponent(){
     const data=await getServerSession(NextAuth)
+    if(!data){
+        return <></>
+    }
     const {user}=data
     console.log(user)
     const userInfo=await findUserInfo(user.userId)
