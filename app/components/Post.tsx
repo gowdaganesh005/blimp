@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import LikeButton from "./LikeButton"
 import CommentButton from "./commentButton"
+import Image from "next/image"
 
 
 export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className,imageUrl}:{
@@ -64,7 +65,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                 </div>
                 {imageUrl && 
                     (<div className="max-w-98   my-2 ">
-                        <img 
+                        <Image 
                         src={imageUrl}
                         alt="" 
                         className="w-full max-h-72 h max-w-[90%] object-contain "/>

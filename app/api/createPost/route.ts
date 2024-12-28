@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import NextAuth from "../../lib/NextAuth"
-import { NextRequest, NextResponse } from "next/server"
+import {  NextResponse } from "next/server"
 import prisma from "@/prisma/db"
 import { writeFile } from "fs/promises"
 import FileUpload from "@/app/lib/FileUpload"

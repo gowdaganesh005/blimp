@@ -44,8 +44,10 @@ export default async function ViewPost({searchParams}:any){
                                 Comments
                             </div>
                             <div className="w-full h-0.5 bg-gray-600"></div>
-                            <div className="w-full">
-                                { post.Comments.map((comment)=>(<Comment data={{...data,comment:comment.comment}}/>))
+                            <div 
+                            
+                            className="w-full">
+                                { post.Comments.map((comment)=>(<Comment key={comment.commentId} data={{...data,comment:comment.comment}}/>))
                                 }
                                 
                             </div>

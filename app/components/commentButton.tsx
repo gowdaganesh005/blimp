@@ -1,7 +1,7 @@
 "use client"
 import { redirect, useRouter } from "next/navigation";
 
-export default function commentButton({num,postId}:{num:number,postId:string}){
+export default function CommentButton({num,postId}:{num:number,postId:string}){
     const router=useRouter()
     return (
         <>

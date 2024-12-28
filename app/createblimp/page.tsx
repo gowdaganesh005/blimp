@@ -3,18 +3,17 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Card from "../components/Card"
-import { ProfileCard } from "../components/ProfileClient"
 import Button from "../components/Button"
 import { useRef, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
-import ProfileComponent from "../components/ProfileServer"
+import Image from "next/image"
 
 
 
 
 
-export default function createBlimp(){
+export default function CreateBlimp(){
     const router=useRouter()
     const [post ,setPost]=useState("")
     const {data:session,status}=useSession()
@@ -98,7 +97,7 @@ export default function createBlimp(){
                                 placeholder="What's happening ?"   
                             />
                             {image && (<div className="w-64  flex justify-center max-h-64 px-2  overflow-hidden pb-3 mb-3">
-                                            <img 
+                                            <Image 
                                                 src={image.toString()} 
                                                 alt="" 
                                                 className="center rounded-xl h-fit w-fit object-fill"/>

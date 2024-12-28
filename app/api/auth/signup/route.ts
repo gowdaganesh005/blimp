@@ -1,7 +1,5 @@
 
 import prisma from "@/prisma/db";
-import { HttpStatusCode } from "axios";
-import { signIn } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 
@@ -10,11 +8,13 @@ export const POST=async (req:NextRequest)=>{
     try {
         const data=await req.json()
         console.log(data)
+        // @ts-ignore
         const exists=await prisma.user.findFirst({
             where:{
-                email:data.email
-            } || {
-                username:data.username
+                OR: [
+                    { email: data.email },
+                    { username: data.username }
+                ]
             }
 
         })
