@@ -1,6 +1,6 @@
 import prisma from "@/prisma/db"
 import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { User } from "next-auth"
 
 interface AuthUser extends User{

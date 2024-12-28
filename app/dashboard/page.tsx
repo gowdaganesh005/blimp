@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { fetchUserPosts } from "../lib/serverActions/fetchUserPost";
 import { Follow } from "../components/Follow";
 import findUserInfo from "../lib/serverActions/findUserInfo";
+import Button from "../components/Button";
 
 
 
@@ -62,6 +63,10 @@ export default async  function Dashboard({searchParams}:any){
                         {isOwnUser?(<></>):(<div><Follow followeeId={userId || ""} followed={viewUser?.followed|| false}/></div>)}
                         
                         </div>
+                        {isOwnUser?(<Button 
+                        
+                                        className="text-sm my-2"
+                                        name="Edit profile picture"/>):(<></>)}
                         <div className="flex px-3">
                             <div className="pr-4 text-lg">
                                 { viewUser?.followerCount } Followers
@@ -91,6 +96,7 @@ export default async  function Dashboard({searchParams}:any){
                                     comments={post.Num_Comments}
                                     repost={post.Num_Repost}
                                     isLiked={post.isLiked}
+                                    imageUrl={post.imageUrl}
                                 />
                                 
 

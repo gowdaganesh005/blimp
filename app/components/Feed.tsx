@@ -4,7 +4,7 @@ import { Post } from "./Post"
 import { getServerSession } from "next-auth"
 import NextAuth from "../lib/NextAuth"
 import { isAnyArrayBuffer } from "util/types"
-import { isArray } from "util"
+
 
 
 export default async function Feed(){
@@ -18,7 +18,7 @@ export default async function Feed(){
     }
 
     const {data}=res
-    console.log(data)
+    
     
     
     
@@ -43,6 +43,7 @@ export default async function Feed(){
                     comments={post.Num_Comments}
                     repost={post.Num_Repost}
                     isLiked={post.isLiked}
+                    imageUrl={post.imageUrl}
                 />
                 
             ))):(<div>{"Could not fetch posts"}</div>)

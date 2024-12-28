@@ -38,6 +38,7 @@ model Post{
   Num_Repost       Int @default(0)
   Likes            Likes[]
   Comments         Comments[]
+  imageUrl         String?
   
 
 

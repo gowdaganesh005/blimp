@@ -8,7 +8,7 @@ import LikeButton from "./LikeButton"
 import CommentButton from "./commentButton"
 
 
-export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className}:{
+export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className,imageUrl}:{
     userId:string
     postId:string
     fullName:string
@@ -18,7 +18,8 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
     likes: number
     repost: number
     isLiked:boolean
-    className?:string
+    className?:string,
+    imageUrl?:string
 }){
     const router=useRouter()
     
@@ -57,10 +58,19 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     </div>
                 </div>
             </div>
-            <div className="pl-12 text-gray-300">
+            <div className="pl-12  text-gray-300">
                 <div onClick={()=>router.push(`/viewPost?postId=${postId}`)}>
                     {content}
                 </div>
+                {imageUrl && 
+                    (<div className="max-w-98   my-2 ">
+                        <img 
+                        src={imageUrl}
+                        alt="" 
+                        className="w-full max-h-72 h max-w-[90%] object-contain "/>
+                    </div>)
+                }
+
                 <div className="py-3 flex justify-between">
                     
                     <div className="flex flex-col items-center w-fit ">
