@@ -1,16 +1,11 @@
 "use client"
 import Card from "./Card"
-import findUserInfo from "../lib/serverActions/findUserInfo"
-import { getServerSession } from "next-auth"
-import NextAuth from "../lib/NextAuth"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import { useSession } from "next-auth/react"
-import { useEffect } from "react"
 
 
 
- function ProfileCard({userId,fullName,username,followers,following}:any){
+
+ function ProfileCard({userId,fullName,username,followers,following,profilePhoto}:any){
     
     
     
@@ -23,6 +18,7 @@ import { useEffect } from "react"
                 </div>
                 <div className="  relative -mt-10 flex flex-col items-center ">
                     <div>
+                        {profilePhoto?(<img src={profilePhoto} className="size-20 rounded-full"/>):(
                         <svg xmlns="http://www.w3.org/2000/svg" 
                             fill="black" 
                             viewBox="0 0 24 24" 
@@ -34,6 +30,7 @@ import { useEffect } from "react"
                             strokeLinejoin="round" 
                             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
+                        )}
                         <div className="mt-2 text-center text-lg font-medium">
                             {fullName}
                         </div>

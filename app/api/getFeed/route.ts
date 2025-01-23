@@ -15,6 +15,7 @@ export async function POST(req:NextRequest){
                         userId:true,
                         username:true,
                         fullName:true,
+                        profilePhoto:true,
                         
                     }
                 }

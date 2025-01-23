@@ -26,6 +26,7 @@ model User{
   Comments        Comments[]
   following       Following[] @relation("Following") 
   followee        Following[] @relation("Followed")
+  profilePhoto    String?
 }
 
 model Post{

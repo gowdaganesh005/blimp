@@ -9,6 +9,9 @@ import { fetchUserPosts } from "../lib/serverActions/fetchUserPost";
 import { Follow } from "../components/Follow";
 import findUserInfo from "../lib/serverActions/findUserInfo";
 import Button from "../components/Button";
+import { EditButton } from "../components/ImageEditButton";
+import { useState } from "react";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 
 
@@ -43,7 +46,8 @@ export default async  function Dashboard({searchParams}:any){
                         
                         <div className="flex justify-between">
                         <div className="flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
+                        {(viewUser?.profilePhoto)? (<img src={viewUser?.profilePhoto} className="w-24 h-24 rounded-full"/>):
+                        (<svg xmlns="http://www.w3.org/2000/svg" 
                             fill="black" 
                             viewBox="0 0 24 24" 
                             strokeWidth={1.5} 
@@ -53,7 +57,8 @@ export default async  function Dashboard({searchParams}:any){
                             strokeLinecap="round" 
                             strokeLinejoin="round" 
                             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
+                        </svg>)
+                        }               
                         <div>
                         <div className="font-bold text-3xl pt-3 px-2">{viewUser?.fullName}</div>
                         <div className="px-2 font-semibold ">@{viewUser?.username}</div>
@@ -63,10 +68,7 @@ export default async  function Dashboard({searchParams}:any){
                         {isOwnUser?(<></>):(<div><Follow followeeId={userId || ""} followed={viewUser?.followed|| false}/></div>)}
                         
                         </div>
-                        {isOwnUser?(<Button 
-                        
-                                        className="text-sm my-2"
-                                        name="Edit profile picture"/>):(<></>)}
+                        {isOwnUser?(<EditButton userId={userId}/>):(<></>)}
                         <div className="flex px-3">
                             <div className="pr-4 text-lg">
                                 { viewUser?.followerCount } Followers
@@ -97,6 +99,7 @@ export default async  function Dashboard({searchParams}:any){
                                     repost={post.Num_Repost}
                                     isLiked={post.isLiked}
                                     imageUrl={post.imageUrl}
+                                    profilePhoto={post.user.profilePhoto}
                                 />
                                 
 

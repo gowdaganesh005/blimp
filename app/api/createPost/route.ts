@@ -9,9 +9,10 @@ import fs from "fs"
 
 export async function POST(req:any){
     const data=await req.formData()
+    console.log(data)
     const file=data.get('image')
-    let url:string;
-    if(file){
+    let url:string | null=null;
+    if(file!=null){
         let path
         try {
             const byteData=await file.arrayBuffer()
@@ -37,6 +38,7 @@ export async function POST(req:any){
             fs.unlinkSync(path)
             return NextResponse.json({messsage:"upload failed something went wrong"},{status:500})
        }
+    }
 
 
        try {
@@ -44,6 +46,7 @@ export async function POST(req:any){
                 const session=await getServerSession(NextAuth)
                 const content=data.get('data')
                 console.log(content)
+                
                 const res=await prisma.post.create({
                     data:{
                         
@@ -62,39 +65,13 @@ export async function POST(req:any){
                 return NextResponse.json({message:"Error creating the Post"},{status:500})
                 
             }
-        
-
-
-    }
-
-    
 }
-    
-//     try {
-//         const data=await req.formData()
-//         const session=await getServerSession(NextAuth)
         
-        
-    
-        
-//         const content=data.get('data')
-//         console.log(content)
-//         const res=await prisma.post.create({
-//             data:{
-                
-//                 userId:session.user.userId,
-//                 content,
-                
 
-//             }
-//         })
-//         if(res){
-//             return NextResponse.json({message:"Post Created Successfully"},{status:200})
-//         }
-//     } catch (error:any) {
-//         console.log(error?.message)
-//         return NextResponse.json({message:"Error creating the Post"},{status:500})
-        
-//     }
 
-// }
+    
+
+    
+
+    
+    

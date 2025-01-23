@@ -17,6 +17,7 @@ export default async  function  findUserInfo(followeeId:string,followerId?:strin
                     fullName:true,
                     followerCount:true,
                     followingCount:true,
+                    profilePhoto:true,
                     password:false
                 }
             })

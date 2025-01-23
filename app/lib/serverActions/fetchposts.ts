@@ -16,6 +16,7 @@ export default async  function fetchPost({postId}:{postId:string}){
                         userId:true,
                         username:true,
                         fullName:true,
+                        profilePhoto:true
                         
                     }
                 },

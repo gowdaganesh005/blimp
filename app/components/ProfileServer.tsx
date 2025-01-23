@@ -18,6 +18,7 @@ export default async function ProfileComponent(){
             username={userInfo?.username}
             followers={userInfo?.followerCount}
             following={userInfo?.followingCount}
+            profilePhoto={userInfo?.profilePhoto}
             />
     )
 }

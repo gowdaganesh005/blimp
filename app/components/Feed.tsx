@@ -32,6 +32,7 @@ export default async function Feed(){
         <>
         {
             (data[0]?.postId)?(data?.map((post:any)=>(
+                
                 <Post
                     key={post.postId}
                     userId={post.user.userId}
@@ -44,6 +45,7 @@ export default async function Feed(){
                     repost={post.Num_Repost}
                     isLiked={post.isLiked}
                     imageUrl={post.imageUrl}
+                    profilePhoto={post.user.profilePhoto}
                 />
                 
             ))):(<div>{"Could not fetch posts"}</div>)

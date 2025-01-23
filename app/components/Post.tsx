@@ -7,9 +7,10 @@ import { toast } from "react-toastify"
 import LikeButton from "./LikeButton"
 import CommentButton from "./commentButton"
 import Image from "next/image"
+import { deletePost } from "../lib/serverActions/deletePost"
 
 
-export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className,imageUrl}:{
+export function Post({userId,postId,fullName,username,content,likes,comments,repost,isLiked,className,imageUrl,profilePhoto}:{
     userId:string
     postId:string
     fullName:string
@@ -20,9 +21,35 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
     repost: number
     isLiked:boolean
     className?:string,
-    imageUrl?:string
+    imageUrl?:string,
+    profilePhoto?:string
 }){
     const router=useRouter()
+    const {data:session,status}= useSession()
+    // @ts-ignore
+    const loggedUser=session?.user?.userId
+    const [opt,setOpt]=useState(false)
+    function handleClick(){
+        if(loggedUser==userId){
+            setOpt(!opt)
+        }
+        
+    }
+
+    async function clickDelete(){
+        if(loggedUser==userId){
+            const result=await deletePost(postId)
+            if(result){
+                router.push('/')
+            }
+            else{
+                toast.error('Error deleting the post ')
+                return
+            }
+
+        }
+        
+    }
     
     
     return(
@@ -34,7 +61,8 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
             <div
             onClick={()=>router.push(`/dashboard?userId=${userId}`)}
             className="p-1 flex text-gray-200 overflow-y-auto ">
-                <svg xmlns="http://www.w3.org/2000/svg" 
+                {(profilePhoto!=null)?(<img src={profilePhoto} className="size-11 rounded-full" />):
+                (<svg xmlns="http://www.w3.org/2000/svg" 
                     fill="black" 
                     viewBox="0 0 24 24" 
                     strokeWidth={1.5} 
@@ -44,7 +72,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
                     d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
+                </svg>)}
                 <div className="w-full">
                     <div className="flex justify-between w-full">
                         <div className="px-2 font-medium">
@@ -65,8 +93,10 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                 </div>
                 {imageUrl && 
                     (<div className="max-w-98   my-2 ">
-                        <Image 
+                        <img 
                         src={imageUrl}
+                        width={200}
+                        height={100}
                         alt="" 
                         className="w-full max-h-72 h max-w-[90%] object-contain "/>
                     </div>)
@@ -101,7 +131,15 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                         { repost } Repost
                         </div>
                     </div> */}
-                    <div className="flex flex-col items-center w-fit mx-5">
+                    <div className="relative flex flex-col w-fit mr-5">
+                        {opt && 
+                            <div className=" absolute bg-gray-900 w-20  overflow-y-visible -mx-16 -my-8 px-2 py-1"
+                                 onClick={clickDelete}>
+                                Delete
+                            </div>
+                        }   
+                        <button onClick={handleClick} 
+                        className="  ">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -114,6 +152,9 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                             strokeLinejoin="round" 
                             d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                         </svg>
+                        </button>
+                        
+                        
                         
                     </div>
                 </div>

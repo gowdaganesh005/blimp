@@ -19,6 +19,7 @@ export async function fetchUserPosts(userId:string){
                         userId:true,
                         username:true,
                         fullName:true,
+                        profilePhoto:true,
                         
                     }
                 }

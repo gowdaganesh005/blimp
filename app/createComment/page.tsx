@@ -39,6 +39,8 @@ export default async function createComment({searchParams}:any){
                     comments={post.Num_Comments}
                     repost={post.Num_Repost}
                     isLiked={post.isLiked}
+                    imageUrl={post.imageUrl || ""}
+                    profilePhoto={post.user.profilePhoto || ""}
                 />
                 <Card className=" w-[98%] ">
                     <CommentBox postId={post.postId} userId={user.userId} fullName={user.fullName} username={user.username}/>

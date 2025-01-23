@@ -49,6 +49,7 @@ export default function CreateBlimp(){
             if(file){
                 form.append("image",file)
             }
+            console.log(form)
             const res=await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/createPost` ,form,{
                 headers:{
                     "Content-Type":"multipart/form-data"
@@ -97,7 +98,7 @@ export default function CreateBlimp(){
                                 placeholder="What's happening ?"   
                             />
                             {image && (<div className="w-64  flex justify-center max-h-64 px-2  overflow-hidden pb-3 mb-3">
-                                            <Image 
+                                            <img 
                                                 src={image.toString()} 
                                                 alt="" 
                                                 className="center rounded-xl h-fit w-fit object-fill"/>
