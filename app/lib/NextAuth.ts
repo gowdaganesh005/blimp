@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { User } from "next-auth"
 
+
+
 interface AuthUser extends User{
     id:string
     userId:string
@@ -43,7 +45,8 @@ const NextAuth={
                                 username:user.username,
                                 fullName:user.fullName,
                                 
-                            } 
+                            }
+                            
                             return authUser
                         }
                         else{

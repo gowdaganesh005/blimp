@@ -12,6 +12,7 @@ import Button from "../components/Button";
 import { EditButton } from "../components/ImageEditButton";
 import { useState } from "react";
 import { imageConfigDefault } from "next/dist/shared/lib/image-config";
+import DmSection from "../components/DmButton";
 
 
 
@@ -69,6 +70,7 @@ export default async  function Dashboard({searchParams}:any){
                         
                         </div>
                         {isOwnUser?(<EditButton userId={userId}/>):(<></>)}
+                        <div className="flex justify-between">
                         <div className="flex px-3">
                             <div className="pr-4 text-lg">
                                 { viewUser?.followerCount } Followers
@@ -76,6 +78,10 @@ export default async  function Dashboard({searchParams}:any){
                             <div className="pr-4 text-lg">
                                 { viewUser?.followingCount } Following
                             </div>
+                        </div>
+                        <div>
+                            <DmSection profilePhoto={viewUser?.profilePhoto} fullName={viewUser?.fullName || ""}/>
+                        </div>
                         </div>
                         <div className="w-full h-0.5 bg-gray-600"></div>
                         <div>

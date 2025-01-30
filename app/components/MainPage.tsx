@@ -6,7 +6,7 @@ import { Trending } from "./Trending"
 import Feed from "./Feed"
 import ProfileComponent from "./ProfileServer"
 
-function MainPage({children}:{children:ReactNode}){
+function MainPage(){
     return(
         <>
         <div className=" h-full bg-gray-800 mx-4 rounded-lg grid grid-cols-10" >

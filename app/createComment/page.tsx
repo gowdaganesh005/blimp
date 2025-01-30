@@ -1,6 +1,5 @@
 import Card from "../components/Card";
 import { Post } from "../components/Post";
-import Comment from "../components/Comment";
 import CommentBox from "../components/commentBox";
 import fetchPost from "../lib/serverActions/fetchposts";
 import { getServerSession } from "next-auth";
