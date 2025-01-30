@@ -4,7 +4,7 @@ import {  useState } from "react"
 import { DmSection } from "./DmSection"
 
 
-export default function DmButton({profilePhoto,fullName}:{profilePhoto?:string | null,fullName:string}){
+export default function DmButton({profilePhoto,fullName,viewingUserId}:{profilePhoto?:string | null,fullName:string,viewingUserId:string}){
     const [chat,setChat] = useState<boolean>(false)
     return(
         <>
@@ -15,7 +15,7 @@ export default function DmButton({profilePhoto,fullName}:{profilePhoto?:string |
             </svg>
         </button>
         {chat && (
-            <DmSection profilePhoto={profilePhoto || null} fullName={fullName}/>                
+            <DmSection profilePhoto={profilePhoto || null} fullName={fullName} setChat={setChat} viewingUserId={viewingUserId}/>                
         )}
         </>
     )

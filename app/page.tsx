@@ -10,11 +10,7 @@ export default async function Home() {
   
   return (
     <>
-    <WebSocketContextProvider session={data?.session || null}>
       <MainPage/>
-    </WebSocketContextProvider>
-        
-
     </>
   );
 }

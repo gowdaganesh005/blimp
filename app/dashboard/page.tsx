@@ -80,7 +80,7 @@ export default async  function Dashboard({searchParams}:any){
                             </div>
                         </div>
                         <div>
-                            <DmSection profilePhoto={viewUser?.profilePhoto} fullName={viewUser?.fullName || ""}/>
+                            <DmSection profilePhoto={viewUser?.profilePhoto} fullName={viewUser?.fullName || ""} viewingUserId={userId}/>
                         </div>
                         </div>
                         <div className="w-full h-0.5 bg-gray-600"></div>

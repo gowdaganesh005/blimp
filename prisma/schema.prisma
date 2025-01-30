@@ -27,6 +27,8 @@ model User{
   following       Following[] @relation("Following") 
   followee        Following[] @relation("Followed")
   profilePhoto    String?
+  Inbox           Messages[] @relation("Reciever")
+  Outbox           Messages[] @relation("Sender")
 }
 
 model Post{
@@ -70,5 +72,15 @@ model Comments{
   user  User @relation(fields: [userId],references: [userId])
   userId String
   comment String 
+
+}
+
+model Messages{
+  msgId String @id @default(uuid())
+  sender User @relation("Sender",fields: [senderId] ,references: [userId])
+  senderId String
+  reciever User  @relation("Reciever",fields: [recieverId] ,references: [userId])
+  recieverId String
+  message String
 
 }

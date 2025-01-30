@@ -1,14 +1,32 @@
 'use client'
 import { useSession } from "next-auth/react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { io ,Socket } from "socket.io-client"
 
-export function DmSection({profilePhoto,fullName}:{profilePhoto?:string | null,fullName:string}){
+export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profilePhoto?:string | null,fullName:string,setChat:any,viewingUserId:string}){
     const {data:session,status} = useSession()
     const textarearef = useRef<any>(null)
+    const [socket,setSocket] = useState<any>()
+    
     useEffect(()=>{
+        const socket = io('http://localhost:8000')
+        setSocket(socket)
+        //@ts-ignore
+        socket.emit('authConnection',session?.user.userId)
+        //@ts-ignore
+        socket.emit('messageUser',{viewingUserId:viewingUserId,message:'hi from a friend'})
+
+        socket.on('messageUser',(message)=>{
+            console.log(message)
+        })
+
+        return(()=>{
+            socket?.disconnect();
+        })
+
         
         
-    })
+    },[])
     const handleInput = ()=>{
         if(textarearef.current){
             textarearef.current.style.height = 'auto'
@@ -37,7 +55,9 @@ export function DmSection({profilePhoto,fullName}:{profilePhoto?:string | null,f
                         {fullName}
                     </div>
                 </div>
-                <div className="hover:bg-red-600 rounded-full">
+                <div
+                    onClick={()=>(setChat((prev:any) => !prev))} 
+                    className="hover:bg-red-600 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  ">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
@@ -48,7 +68,12 @@ export function DmSection({profilePhoto,fullName}:{profilePhoto?:string | null,f
                     onChange={handleInput}
                     ref={textarearef} 
                     className="w-[80%] bg-gray-950 p-2 px-3 rounded-xl  max-h-30  focus:outline-none overflow-scroll scrollbar-hidden"  />
-                <div className="p-2 rounded-full bg-green-700 ">
+                <div 
+                    onClick={()=>{
+                        if(socket) socket.emit('messageUser',{viewingUserId,message:'hi second time'})
+                        else console.log("socket is not true")
+                    }}
+                    className="p-2 rounded-full bg-green-700 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  ">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
