@@ -1,36 +1,111 @@
 'use client'
+
 import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 import { io ,Socket } from "socket.io-client"
+import { fetchMessages } from "../lib/serverActions/fetchMessages"
+
+enum MessageType{
+    sent = 'sent',
+    recieved = 'recieved'
+}
+
+interface MessageStructureType{
+    message:string,
+    timeStamp?:Date
+    type: MessageType
+}
 
 export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profilePhoto?:string | null,fullName:string,setChat:any,viewingUserId:string}){
     const {data:session,status} = useSession()
+    // @ts-ignore
+    const userId = session?.user?.userId;
     const textarearef = useRef<any>(null)
-    const [socket,setSocket] = useState<any>()
+    let socket = useRef<any>(null)
+    let sendButtonRef = useRef<HTMLButtonElement>(null)
+    const [input,setInput] = useState<string | null>(null)
+    
+    const [AllMessage,setAllMessage] = useState<MessageStructureType[]>([])
+
+    function sendMessage(){
+        console.log("hi from send ")
+        console.log(input)
+        if(input!='' && input != null){
+            const Message : MessageStructureType = {
+                message:input,
+                type: MessageType.sent
+            }
+            console.log(Message)
+            setAllMessage(prev=>[...prev,Message])
+            if(socket.current) {
+                socket.current.emit('messageUser',{recieverId:viewingUserId,payload:Message})
+                
+            }
+            
+        }   
+        setInput('') 
+    }
+
+    async function fetchPrevMessages(){
+        const prevMessagesdata = await fetchMessages(userId,viewingUserId)
+        const prevMessages : MessageStructureType[] =[]
+        if(prevMessagesdata){
+            for(const ele of prevMessagesdata){
+                const msg : MessageStructureType= {
+                    message: ele.message,
+                    timeStamp: ele.timestamp,
+                    type: (ele.senderId==userId ? MessageType.sent : MessageType.recieved)
+                }
+                prevMessages.push(msg)
+                // prevMessages.sort((ele1,ele2)=>{
+                //     if(ele1.timeStamp && ele2.timeStamp && ele1.timeStamp < ele2.timeStamp){
+                //         return -1
+                //     }
+                //     return 1
+                // })
+            }
+            setAllMessage(prevMessages)
+        }
+        
+    }
+    
     
     useEffect(()=>{
-        const socket = io('http://localhost:8000')
-        setSocket(socket)
-        //@ts-ignore
-        socket.emit('authConnection',session?.user.userId)
-        //@ts-ignore
-        socket.emit('messageUser',{viewingUserId:viewingUserId,message:'hi from a friend'})
-
-        socket.on('messageUser',(message)=>{
-            console.log(message)
-        })
+        if(status!='unauthenticated' && userId){
+            fetchPrevMessages();
+            socket.current = io('http://localhost:8000')
+            
+            socket.current.emit('authConnection',userId)
+            
+            socket.current.on('messageUser',(data:any)=>{
+                const parsedMessage:MessageStructureType={
+                    message:data.message,
+                    type: MessageType.recieved,
+                    timeStamp: data.timestamp
+                }
+                setAllMessage(prev=>[...prev,parsedMessage])
+            })
 
         return(()=>{
-            socket?.disconnect();
+            socket?.current.disconnect();
         })
+        }
+        
 
         
         
     },[])
-    const handleInput = ()=>{
+    const handleInput = (e:any)=>{
+        
+        setInput(e.target.value)
+        if(e.target.value != '' && sendButtonRef.current){
+            sendButtonRef.current.disabled=false
+        }
+        
         if(textarearef.current){
             textarearef.current.style.height = 'auto'
             textarearef.current.style.height = `${Math.min(textarearef.current.scrollHeight,120)}px`
+
         }
     }
     return(
@@ -63,21 +138,28 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
                 </svg>
                 </div>
             </div>
+            <div className="p-2 text-gray-300  overflow-scroll">
+                {AllMessage.map(msg=>(
+                    <div className={`${msg.type==MessageType.recieved ? 'bg-blue-900':'bg-green-800'} p-1 my-1`}>
+                        {msg.message}
+                    </div>
+                ))}
+            </div>
             <div className=" flex items-center justify-between rounded-xl py-2 bg-gray-950 p-2 m-2 ">
-                <textarea 
+                <textarea
+                    value = {input || ""} 
                     onChange={handleInput}
                     ref={textarearef} 
                     className="w-[80%] bg-gray-950 p-2 px-3 rounded-xl  max-h-30  focus:outline-none overflow-scroll scrollbar-hidden"  />
-                <div 
-                    onClick={()=>{
-                        if(socket) socket.emit('messageUser',{viewingUserId,message:'hi second time'})
-                        else console.log("socket is not true")
-                    }}
+                <button 
+                    
+                    ref={sendButtonRef}
+                    onClick={sendMessage}
                     className="p-2 rounded-full bg-green-700 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  ">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
         </>
