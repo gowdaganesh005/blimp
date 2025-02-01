@@ -3,7 +3,8 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 import { io ,Socket } from "socket.io-client"
-import { fetchMessages } from "../lib/serverActions/fetchMessages"
+import { fetchMessages, fetchMoreMessage } from "../lib/serverActions/fetchMessages"
+import { timeStamp } from "console"
 
 enum MessageType{
     sent = 'sent',
@@ -13,7 +14,8 @@ enum MessageType{
 interface MessageStructureType{
     message:string,
     timeStamp?:Date
-    type: MessageType
+    type: MessageType,
+    msgId:string
 }
 
 export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profilePhoto?:string | null,fullName:string,setChat:any,viewingUserId:string}){
@@ -23,6 +25,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     const textarearef = useRef<any>(null)
     let socket = useRef<any>(null)
     let sendButtonRef = useRef<HTMLButtonElement>(null)
+    let messageBarRef = useRef<HTMLDivElement>(null)
     const [input,setInput] = useState<string | null>(null)
     
     const [AllMessage,setAllMessage] = useState<MessageStructureType[]>([])
@@ -33,7 +36,9 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
         if(input!='' && input != null){
             const Message : MessageStructureType = {
                 message:input,
-                type: MessageType.sent
+                type: MessageType.sent,
+                msgId:Date.now().toString(),
+                timeStamp: new Date(Date.now()),
             }
             console.log(Message)
             setAllMessage(prev=>[...prev,Message])
@@ -48,10 +53,12 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
 
     async function fetchPrevMessages(){
         const prevMessagesdata = await fetchMessages(userId,viewingUserId)
+        prevMessagesdata?.reverse()
         const prevMessages : MessageStructureType[] =[]
         if(prevMessagesdata){
             for(const ele of prevMessagesdata){
                 const msg : MessageStructureType= {
+                    msgId:ele.msgId,
                     message: ele.message,
                     timeStamp: ele.timestamp,
                     type: (ele.senderId==userId ? MessageType.sent : MessageType.recieved)
@@ -79,10 +86,12 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
             
             socket.current.on('messageUser',(data:any)=>{
                 const parsedMessage:MessageStructureType={
+                    msgId:data.msgId,
                     message:data.message,
                     type: MessageType.recieved,
-                    timeStamp: data.timestamp
+                    timeStamp: new Date( Date.parse( data.timeStamp)),
                 }
+                console.log(parsedMessage)
                 setAllMessage(prev=>[...prev,parsedMessage])
             })
 
@@ -95,6 +104,11 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
         
         
     },[])
+    useEffect(()=>{
+        if(messageBarRef.current){
+            messageBarRef.current.scrollTop = messageBarRef.current.scrollHeight
+        }
+    },[AllMessage])
     const handleInput = (e:any)=>{
         
         setInput(e.target.value)
@@ -106,6 +120,26 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
             textarearef.current.style.height = 'auto'
             textarearef.current.style.height = `${Math.min(textarearef.current.scrollHeight,120)}px`
 
+        }
+    }
+
+    const showMoremessags =async ()=>{
+        const lastTimeStamp = AllMessage[0].timeStamp 
+        if(lastTimeStamp){
+            let parsedMessages:MessageStructureType[]=[];
+            const oldMessages = await fetchMoreMessage(userId,viewingUserId,lastTimeStamp)
+            oldMessages.reverse()
+            oldMessages.forEach(element => {
+                const msg :MessageStructureType= {
+                    message: element.message,
+                    timeStamp : element.timestamp,
+                    msgId: element.msgId,
+                    type: (element.senderId==userId ? MessageType.sent : MessageType.recieved)
+                }
+                parsedMessages.push(msg)
+                
+            });
+            setAllMessage([...parsedMessages,...AllMessage])
         }
     }
     return(
@@ -138,10 +172,18 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
                 </svg>
                 </div>
             </div>
-            <div className="p-2 text-gray-300  overflow-scroll">
+            <div ref={messageBarRef} className=" flex flex-col w-full p-2 text-gray-300  overflow-scroll scrollbar-hidden">
+                <div 
+                    onClick={showMoremessags}
+                    className="w-full flex justify-center hover:text-gray-400">Show More</div>
                 {AllMessage.map(msg=>(
-                    <div className={`${msg.type==MessageType.recieved ? 'bg-blue-900':'bg-green-800'} p-1 my-1`}>
+                    <div key={msg.msgId} className={`w-full flex ${msg.type==MessageType.recieved ? 'justify-start ':'justify-end '}`}>
+                    <div  className={`relative flex flex-col  ${msg.type==MessageType.recieved ? 'bg-blue-900 ':'bg-green-800 '} max-w-[60%] pt-1 px-4 pb-3 my-1 rounded-lg  text-base`}>
                         {msg.message}
+                        <div className="-mr-3 mt-0.5 -mb-3 flex justify-end tracking-wide text-[0.7rem] bottom-0 i-end">
+                        {msg.timeStamp?.toLocaleTimeString([],{hour12: true ,hour:'2-digit',minute:"2-digit"})}
+                        </div>
+                    </div>
                     </div>
                 ))}
             </div>

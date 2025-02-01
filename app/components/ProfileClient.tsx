@@ -1,12 +1,33 @@
 "use client"
+import { useEffect, useState } from "react"
 import Card from "./Card"
 import Link from "next/link"
+import { fetchUnreadMsgCount } from "../lib/serverActions/fetchMessages"
 
 
 
 
  function ProfileCard({userId,fullName,username,followers,following,profilePhoto}:any){
-    
+    const [UnReadMsgCount,setUnReadMsgCount] = useState<number>(0)
+    async function UnreadMessageFetch(){
+        const num = await fetchUnreadMsgCount(userId)
+        setUnReadMsgCount(num)
+    }
+
+    useEffect(()=>{
+        if(userId){
+            UnreadMessageFetch()
+            const interval =setInterval(async ()=>{
+                UnreadMessageFetch()
+                
+                
+            },10000)
+            return ()=>clearInterval(interval)
+        }
+        
+        
+    },[])
+
     
     
     return(
@@ -73,6 +94,16 @@ import Link from "next/link"
 
             </div>
         </Card>
+        <div className="w-full  bg-green-400 flex justify-center items-center p-2 rounded-md mx-1 lg:text-xl py-4">
+            Messages
+            <div className="relative">
+             {UnReadMsgCount>0 ?<div className="absolute w-6 h-6  bg-red-600 rounded-full right-0 -top-3 text-xs flex justify-center text-gray-200 p-1 px-2">{UnReadMsgCount}</div>:<></>}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-2 ">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+            </div>
+                
+            </div>
         </div>
         </>
     )

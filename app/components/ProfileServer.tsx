@@ -12,6 +12,7 @@ export default async function ProfileComponent(){
     console.log(user)
     const userInfo=await findUserInfo(user.userId)
     return(
+        <>
         <ProfileCard 
             userId={userInfo?.userId} 
             fullName={userInfo?.fullName}
@@ -20,5 +21,7 @@ export default async function ProfileComponent(){
             following={userInfo?.followingCount}
             profilePhoto={userInfo?.profilePhoto}
             />
+            
+        </>
     )
 }
