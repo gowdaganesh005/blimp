@@ -3,11 +3,15 @@ import { useEffect, useState } from "react"
 import Card from "./Card"
 import Link from "next/link"
 import { fetchUnreadMsgCount } from "../lib/serverActions/fetchMessages"
+import ChatPage from "./ChatPage"
+import { useRouter } from "next/navigation"
 
 
 
 
  function ProfileCard({userId,fullName,username,followers,following,profilePhoto}:any){
+    const [message,setMessages] = useState(false)
+    const router = useRouter()
     const [UnReadMsgCount,setUnReadMsgCount] = useState<number>(0)
     async function UnreadMessageFetch(){
         const num = await fetchUnreadMsgCount(userId)
@@ -32,7 +36,7 @@ import { fetchUnreadMsgCount } from "../lib/serverActions/fetchMessages"
     
     return(
         <>
-        <div className="col-span-2 min-w-md ">
+        <div className="col-span-2 min-w-md z-20">
         <Card>
             <div className="h-full text-gray-300">
                 <div className="h-20 bg-black w-full rounded-t-md">
@@ -94,7 +98,9 @@ import { fetchUnreadMsgCount } from "../lib/serverActions/fetchMessages"
 
             </div>
         </Card>
-        <div className="w-full  bg-green-400 flex justify-center items-center p-2 rounded-md mx-1 lg:text-xl py-4">
+        <div 
+            onClick={()=>router.push('/messages')}
+            className="w-full  bg-green-400 flex justify-center items-center p-2 rounded-md mx-1 lg:text-xl py-4">
             Messages
             <div className="relative">
              {UnReadMsgCount>0 ?<div className="absolute w-6 h-6  bg-red-600 rounded-full right-0 -top-3 text-xs flex justify-center text-gray-200 p-1 px-2">{UnReadMsgCount}</div>:<></>}
@@ -104,7 +110,10 @@ import { fetchUnreadMsgCount } from "../lib/serverActions/fetchMessages"
             </div>
                 
             </div>
+        
+        
         </div>
+        
         </>
     )
 }

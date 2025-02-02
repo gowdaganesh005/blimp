@@ -33,6 +33,7 @@ export async function fetchMessages(loggeduser:string,viewingUser:string){
                 read:true
             }
         })
+        await redis.del(`OfflineMessageUsers:${loggeduser}-${viewingUser}`)
         return res
         
     } catch (error) {
@@ -87,3 +88,66 @@ export async function fetchUnreadMsgCount(userId:string){
     const num =await redis.get(`UnReadMessages:${userId}`)
     return Number.parseInt(num || '0')
 } 
+
+export async function fetchUnreadMsgSender(userId:string){
+    let data;
+    const senders =[]
+    while((data = await redis.rPop(`OfflineMessageUsers:${userId}`))!=null){
+        senders.push(data)
+    }
+    return senders
+}
+
+export async function fetchAllPrevSenders(userId:string){
+    console.log(userId)
+    const users = await prisma.messages.groupBy({
+        where:{
+            OR:[
+                {
+                    senderId:userId
+                },{
+                    recieverId:userId
+                }
+            ]
+        },
+        by:["senderId","recieverId"],
+        _max: { timestamp: true}
+        
+    })
+    console.log(users)
+    const parsedUsers:string[] = []
+    users.forEach(element => {
+        if(element.senderId!= userId ){
+            parsedUsers.push(element.senderId)
+        }
+         
+        if(element.recieverId != userId){
+            parsedUsers.push(element.recieverId)
+        }
+    });
+    console.log(parsedUsers)
+    const userdata = await prisma.user.findMany({
+        where:{
+            userId:{in: parsedUsers}
+        },
+        select:{
+            fullName: true,
+            username: true,
+            userId: true,
+            profilePhoto: true
+        }
+    })
+    
+    let msgUser = new Map()
+    let count;
+    for(const user of parsedUsers){
+        console.log(`OfflineMessageUsers:${userId}-${user}`)
+        if(Number.parseInt( count = await redis.get(`OfflineMessageUsers:${userId}-${user}`) || '0')>0){
+            msgUser.set(user,count)
+        }
+    }
+
+    await redis.del(`UnReadMessages:${userId}`)
+    
+    return {userdata,msgUser}
+}

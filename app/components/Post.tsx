@@ -56,7 +56,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
         <>
         <div 
         
-        className={` w-[99.7%]`}>
+        className={` w-[99.7%] z-0`}>
         <Card className={`${className}`}>
             <div
             onClick={()=>router.push(`/dashboard?userId=${userId}`)}
@@ -131,7 +131,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                         { repost } Repost
                         </div>
                     </div> */}
-                    <div className="relative flex flex-col w-fit mr-5">
+                    <div className="relative flex flex-col w-fit mr-5 z-0">
                         {opt && 
                             <div className=" absolute bg-gray-900 w-20  overflow-y-visible -mx-16 -my-8 px-2 py-1"
                                  onClick={clickDelete}>
@@ -139,14 +139,14 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                             </div>
                         }   
                         <button onClick={handleClick} 
-                        className="  ">
+                        className=" z-0">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
                             viewBox="0 0 24 24"
                             strokeWidth={1.5} 
                             stroke="currentColor" 
-                            className="size-6">
+                            className="size-6 z-0">
                         <path 
                             strokeLinecap="round" 
                             strokeLinejoin="round" 

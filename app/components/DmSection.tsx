@@ -144,7 +144,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     }
     return(
         <>
-        <div className="fixed flex flex-col justify-between  right-0 top-20 sm:m-10 m-4 h-[80%] min-w-96 max-w-[500px] w-1/2   bg-gray-800  rounded-lg opacity-95 z-30 ">
+        <div className="fixed flex flex-col justify-between  right-0 top-20 sm:m-10 m-4 h-[80%] min-w-96 max-w-[500px] w-1/2 min-h-[500px]   bg-gray-800  rounded-lg opacity-95  ">
             
             <div className="flex justify-between items-center m-3 bg-black opacity-100 rounded-full px-1  ">
                 <div className="flex gap-3 items-center">
@@ -160,14 +160,14 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
                         strokeLinejoin="round" 
                         d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>)}
-                    <div className="text-lg font-bold">
+                    <div className="text-lg font-bold text-gray-300">
                         {fullName}
                     </div>
                 </div>
                 <div
                     onClick={()=>(setChat((prev:any) => !prev))} 
                     className="hover:bg-red-600 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6  ">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
                 </div>
@@ -192,7 +192,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
                     value = {input || ""} 
                     onChange={handleInput}
                     ref={textarearef} 
-                    className="w-[80%] bg-gray-950 p-2 px-3 rounded-xl  max-h-30  focus:outline-none overflow-scroll scrollbar-hidden"  />
+                    className="w-[80%] bg-gray-950 p-2 px-3 rounded-xl  max-h-30  focus:outline-none overflow-scroll scrollbar-hidden text-gray-200"  />
                 <button 
                     
                     ref={sendButtonRef}
