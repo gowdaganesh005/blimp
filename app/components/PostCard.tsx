@@ -2,7 +2,9 @@
 import { useRouter } from "next/navigation"
 import Card from "./Card"
 
+
 function PostCard(){
+    
     const router=useRouter()
     return(
         <>

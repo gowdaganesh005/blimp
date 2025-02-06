@@ -6,6 +6,7 @@ import ChatPage from "./ChatPage"
 
 
 function MainPage(){
+    
 
     return(
         <>
