@@ -9,8 +9,10 @@ export default async function ProfileComponent(){
         return <></>
     }
     const {user}=data
-    console.log(user)
+    console.log("from the profile server:",user)
+    //@ts-ignore
     const userInfo=await findUserInfo(user.userId)
+    console.log(userInfo)
     return(
         <>
         <ProfileCard 

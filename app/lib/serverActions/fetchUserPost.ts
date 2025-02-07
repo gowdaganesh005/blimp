@@ -7,6 +7,7 @@ import NextAuth from "../NextAuth"
 
 export async function fetchUserPosts(userId:string){
     try{
+        //@ts-ignore
         const {user}=await getServerSession(NextAuth)
         console.log(user)
         const post =await prisma.post.findMany({

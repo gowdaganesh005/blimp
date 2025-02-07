@@ -4,14 +4,14 @@ import Button from "./Button"
 import { signOut, useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
-import { searchUsers } from "@/prisma/SearchUsers"
+import { searchUsers }  from "@/prisma/SearchUsers"
 import { SuggestionBox } from "./SuggestionBox"
 
 function Navbar(){
     const router=useRouter()
     const {data:session,status}= useSession()
     const [search,setSearch] = useState<string | null>(null)
-    const [searchUsers,setSearchUsers]=useState<any>([])
+    const [searchedUsers,setSearchedUsers]=useState<any>([])
     const timeoutRef  = useRef<NodeJS.Timeout | null>(null)
 
 
@@ -32,7 +32,7 @@ function Navbar(){
     const searchfn=async (query:string )=>{
         try {
             const users = await searchUsers(query)
-            setSearchUsers(users);
+            setSearchedUsers(users);
         } catch (error) {
             console.log(error)
         }
@@ -41,11 +41,13 @@ function Navbar(){
     const searchFuntion = debounce(searchfn,2000)
 
     useEffect(()=>{
+        console.log(search)
         if(search)
         searchFuntion(search)
 
         return ()=> {if(timeoutRef.current){
             clearTimeout(timeoutRef.current)
+            setSearchedUsers([])
         }}
     },[search])
     const LogOut=async ()=>{
@@ -103,7 +105,7 @@ function Navbar(){
                         {
                             !(status==="authenticated")?(
                             <>
-                                <Button name="SignIn" handler={()=>(router.push("/signin"))} className="mx-1"/>
+                                
                                 <Button name="SignUp" handler={()=>(router.push("/signup"))} />
                             </>)
                             :   <Button name="LogOut" handler={LogOut}/>
@@ -112,7 +114,7 @@ function Navbar(){
                 </div>
             </div>
         </div>
-        {search && <SuggestionBox users ={[{fullName:"ramesh",username:"rameshtwt"}]}/>}
+        {search && <SuggestionBox users ={searchedUsers}/>}
         
         </>
     )

@@ -11,7 +11,7 @@ export interface FormInputs{
     formName:string,
     fields:Field[],
     ButtonName:string,
-    onSubmit:SubmitHandler<FieldValues>,
+    onSubmit:any
     schema?:any
 }
 export function Form({formName,fields,ButtonName,onSubmit,schema}:FormInputs){

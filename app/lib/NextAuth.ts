@@ -1,7 +1,10 @@
 import prisma from "@/prisma/db"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import bcrypt from "bcryptjs"
 import { User } from "next-auth"
+import { pages } from "next/dist/build/templates/app-page"
+import { signIn } from "next-auth/react"
 
 
 
@@ -13,67 +16,24 @@ interface AuthUser extends User{
     
 }
 const NextAuth={
+    
     providers:[
-        CredentialsProvider({
-            name:'Credentials',
-            credentials:{
-                username:{ label: "Username", type:"text",placeholder:"username"},
-                password:{ label:"Password" ,type:"password" }
-            },
-            async authorize(credentials:any){
-                if(credentials){
-                try {
-                    const user=await prisma.user.findFirst({
-                        where:{
-                            username:credentials?.username,  
-                        },
-                        select:{
-                            fullName:true,
-                            userId:true,
-                            username:true,
-                            password:true
-                        }
-                        
-                    })
-                    if(user){
-                        const isValid=await bcrypt.compare(credentials?.password,user.password)
-                        
-                        if(isValid ){
-                            const authUser:AuthUser={
-                                id:user.userId,
-                                userId:user.userId,
-                                username:user.username,
-                                fullName:user.fullName,
-                                
-                            }
-                            
-                            return authUser
-                        }
-                        else{
-                            return null
-                        }
-                    }
-                    else{
-                        return null
-                    }
-                } catch (error) {
-                    throw new Error("Error Validating the User")
-                }
-            }
-            else{
-                return null
-            }
-
-            }
-        })
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || '',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
+        }),
+        
     ],
     secret:process.env.NEXTAUTH_SECRET,
     callbacks:{
+        
         async jwt({token,user}:any){
             if(user){
                 token.userId=user.userId,
                 token.username=user.username,
-                token.fullName=user.fullName
+                token.fullName=user.fullName,
+                token.email = user.email
+                token.onboarded = user.onboarded
             }
             return token
         },
@@ -81,11 +41,52 @@ const NextAuth={
             if(token){
                 session.user.userId=token.userId,
                 session.user.username=token.username,
-                session.user.fullName=token.fullName
+                session.user.fullName=token.fullName,
+                session.user.email = token.email
+                session.user.onboarded = token.onboarded
             }
             return session
+        },
+        async signIn({user,profile}:any){
+            if(!profile?.email){
+                
+                console.log("Error logging in ");
+
+            }
+            const dbuser =await prisma.user.upsert({
+                where:{
+                    email:profile.email
+                },
+                create:{
+                    email: profile.email,
+                    fullName: profile.name,
+                    googleId: profile.sub,
+
+
+                },
+                update:{
+                    
+                    fullName:profile.name,
+                },
+                select:{
+                    userId:true,
+                    username:true,
+                    email:true,
+                    fullName:true,
+                    onboarded:true,
+
+                }
+            })
+            console.log(dbuser)
+            user.userId = dbuser.userId
+            user.fullName = dbuser.fullName
+            user.username = dbuser.username
+            user.onboarded = dbuser.onboarded
+            return true;
         }
-    }
+    },
+    
+    
     
     
 }

@@ -2,6 +2,7 @@
 import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import NextAuth from "../NextAuth";
+import { GetSessionParams } from "next-auth/react";
 
 export default async  function fetchPost({postId}:{postId:string}){
     try {
