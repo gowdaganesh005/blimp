@@ -26,7 +26,8 @@ export function EditButton({userId}:{userId :string}){
     }
     return(
         <>
-        <Button 
+        <Button
+            className="mx-5" 
             name="Edit"
             handler={ImagePicker} />
             <input type="file" 

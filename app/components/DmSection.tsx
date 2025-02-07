@@ -124,7 +124,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     }
 
     const showMoremessags =async ()=>{
-        const lastTimeStamp = AllMessage[0].timeStamp 
+        const lastTimeStamp = AllMessage[0]?.timeStamp 
         if(lastTimeStamp){
             let parsedMessages:MessageStructureType[]=[];
             const oldMessages = await fetchMoreMessage(userId,viewingUserId,lastTimeStamp)

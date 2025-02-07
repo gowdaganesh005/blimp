@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export function SuggestionBox({users}:any){
+export function SuggestionBox({users,setSearch}:any){
     const [message , setMessage ] = useState<string | null>()
     useEffect(()=>{
         setTimeout(()=>{
@@ -18,7 +18,9 @@ export function SuggestionBox({users}:any){
                     {users.length>0 ? users.map((user:any)=>{
                         return(
                             <div
-                                onClick={()=>router.push(`/dashboard?userId=${user.userId}`)} 
+                                onClick={()=>{
+                                    setSearch(null)
+                                    router.push(`/dashboard?userId=${user.userId}`)}} 
                                 key={user.userId}
                                 className="bg-slate-700 p-2 flex my-1 rounded">
                                 { user.profilePhoto ? 

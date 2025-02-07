@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 export default async function ViewPost({searchParams}:any){
     const user=await getServerSession(NextAuth)
     if(!user){
-        redirect("/signin")
+        redirect("/signup")
     }
     const param=await searchParams;
     const {postId}= param
@@ -32,7 +32,7 @@ export default async function ViewPost({searchParams}:any){
                             userId={post?.user.userId || ""}
                             postId={postId} 
                             fullName={post?.user.fullName} 
-                            username={post.user.username} 
+                            username={post.user.username || ""} 
                             content={post.content} 
                             likes={post.Num_Likes}
                             comments={post.Num_Comments}

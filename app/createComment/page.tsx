@@ -14,7 +14,7 @@ export default async function createComment({searchParams}:any){
     let user=await getServerSession(NextAuth)
     if(!user){
         toast.info("Login to proceed")
-        redirect('/signin')
+        redirect('/signup')
         return
     }
     user=user.user
@@ -32,14 +32,14 @@ export default async function createComment({searchParams}:any){
                     userId={post?.user.userId}
                     postId={post.postId} 
                     fullName={post.user.fullName} 
-                    username={post.user.username} 
+                    username={post.user.username || ""} 
                     content={post.content} 
                     likes={post.Num_Likes}
                     comments={post.Num_Comments}
                     repost={post.Num_Repost}
                     isLiked={post.isLiked}
-                    imageUrl={post.imageUrl || ""}
-                    profilePhoto={post.user.profilePhoto || ""}
+                    imageUrl={post.imageUrl || null}
+                    profilePhoto={post.user.profilePhoto || null}
                 />
                 <Card className=" w-[98%] ">
                     <CommentBox postId={post.postId} userId={user.userId} fullName={user.fullName} username={user.username}/>

@@ -17,6 +17,7 @@ export function CommentLayout({userId,postId,fullName,username,content,className
     className?:string
 }){
     const router=useRouter()
+    console.log(profilePhoto)
     
     
     return(
@@ -26,7 +27,7 @@ export function CommentLayout({userId,postId,fullName,username,content,className
             <div
             onClick={()=>router.push(`/dashboard?userId=${userId}`)}
             className="p-1 flex text-gray-200 overflow-y-auto ">
-                {profilePhoto?(<><img src={profilePhoto} className="size-11 rounded-full" /></>):(
+                {profilePhoto!=null && profilePhoto!= ""?(<><img src={profilePhoto} className="size-11 rounded-full" /></>):(
                 <svg xmlns="http://www.w3.org/2000/svg" 
                     fill="black" 
                     viewBox="0 0 24 24" 
@@ -57,10 +58,11 @@ export function CommentLayout({userId,postId,fullName,username,content,className
                     {content}
                 </div>
                 <div className="w-64  flex justify-center max-h-64 px-2  overflow-hidden pb-3 mb-3">
+                    {imageUrl !=null && imageUrl!="" ?
                     <img 
                         src={imageUrl} 
                         alt="" 
-                        className="center rounded-xl h-fit w-fit object-fill"/>
+                        className="center rounded-xl h-fit w-fit object-fill"/>:<></>}
                 </div>
                 
 

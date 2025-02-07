@@ -26,7 +26,7 @@ export default async  function Dashboard({searchParams}:any){
     
 
     if(!data){
-        redirect("/signin")
+        redirect("/signup")
     }
     const {user}=data
     const viewUser=await findUserInfo(userId,user.userId)

@@ -23,7 +23,7 @@ export default function LikeButton({postId,likes,isLiked}:{postId:string,likes:n
         
         if(status==="unauthenticated"){
             toast.info("Login to your account")
-            router.push("/signin")
+            router.push("/signup")
             return 
         }
         setLike(prev=>!prev)

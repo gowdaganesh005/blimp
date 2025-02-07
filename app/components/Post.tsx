@@ -21,8 +21,8 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
     repost: number
     isLiked:boolean
     className?:string,
-    imageUrl?:string,
-    profilePhoto?:string
+    imageUrl?:string | null,
+    profilePhoto?:string | null
 }){
     const router=useRouter()
     const {data:session,status}= useSession()

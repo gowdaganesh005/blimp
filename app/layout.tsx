@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/navbar";
 import { ToastContainer } from "react-toastify";
 import SessionWraper from "./components/SessionWrappers";
+import BottomNavBar from "./components/BottomNavBar";
 
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default function RootLayout({
         <SessionWraper>
         <Navbar/>
         {children}
+        <BottomNavBar/>
         </SessionWraper>
         
         

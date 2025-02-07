@@ -26,7 +26,7 @@ export async function searchUsers(query: string, limit: number = 10) {
             similarity_score DESC
         LIMIT ${limit}
         `;
-
+        if(users)
         console.log("Raw search results:", users);
         
         if (!users || users.length === 0) {
@@ -35,8 +35,8 @@ export async function searchUsers(query: string, limit: number = 10) {
         }
 
         return users;
-    } catch (error) {
-        console.error("Search error:", error);
+    } catch (error:any) {
+        // console.log("Search error:", error);
         throw error; // Re-throw to handle in the calling function
     }
 }

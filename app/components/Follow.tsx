@@ -33,7 +33,7 @@ export function Follow({followeeId,followed}:{followeeId:string,followed:boolean
     return(
         <>
         <div className="my-3">
-            {follow?(<Button name="Following" handler={followAction}/>)
+            {follow?(<Button className="text-white outline outline-white bg-gray-900" name="Following" handler={followAction}/>)
             :(<Button name="Follow" handler={followAction}/>)}
             
         </div>

@@ -1,13 +1,13 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import Card from "../components/Card"
 import Button from "../components/Button"
 import { useRef, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
-import Image from "next/image"
+
 
 
 
@@ -21,7 +21,7 @@ export default function CreateBlimp(){
     const [file,setFile]=useState<File |null>(null)
     const [image,setImage]=useState<string | ArrayBuffer | null>(null)
     if(status==="unauthenticated"){
-        router.push("/signin")
+        redirect("/signup")
         return
     }
     const handleFileChange=(e:any)=>{

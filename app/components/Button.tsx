@@ -4,7 +4,7 @@ export default function Button({name,handler,className}:{name:string,handler?:an
             <button
             type="submit"
             onClick={handler}
-            className={`${className} bg-gray-300 p-1 px-3 rounded-full font-bold text-lg text-gray-800`}
+            className={`${className} bg-gray-300 p-1 px-3 rounded-full font-bold md:text-lg text-base text-gray-800`}
             >
                 {name}
             </button>

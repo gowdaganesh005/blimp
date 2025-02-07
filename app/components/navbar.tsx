@@ -71,7 +71,7 @@ function Navbar(){
                 <div className="flex justify-between items-center">
                     <div 
                         onClick={()=>router.push("/")}
-                        className="text-3xl px-4 font-black ">
+                        className="md:text-3xl text-xl px-4 font-black ">
                         BLIMP
                     </div>
                     <div className="w-1/2 flex items-center justify-between bg-slate-800 rounded-full p-2 "> 
@@ -81,7 +81,7 @@ function Navbar(){
                                 onChange={(e)=>setSearch(e.target.value)}
                                 placeholder="Search"
                                 type="text" 
-                                className="rounded-full px-2 -my-3 bg-slate-800 w-[150%] outline-none " />
+                                className="rounded-full px-2 -my-3 bg-slate-800 md:w-[150%] w-[60%] max-w-3/4 outline-none " />
 
                         </div>
                         {search ? (
@@ -114,7 +114,7 @@ function Navbar(){
                 </div>
             </div>
         </div>
-        {search && <SuggestionBox users ={searchedUsers}/>}
+        {search && <SuggestionBox users ={searchedUsers} setSearch={setSearch}/>}
         
         </>
     )
