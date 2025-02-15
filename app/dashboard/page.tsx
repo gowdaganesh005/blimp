@@ -10,8 +10,6 @@ import { Follow } from "../components/Follow";
 import findUserInfo from "../lib/serverActions/findUserInfo";
 import Button from "../components/Button";
 import { EditButton } from "../components/ImageEditButton";
-import { useState } from "react";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 import DmSection from "../components/DmButton";
 
 
