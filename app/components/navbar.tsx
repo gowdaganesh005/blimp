@@ -66,12 +66,12 @@ function Navbar(){
     return(
         
         <>
-        <div className="w-full sticky top-0 overflow-hidden">
-            <div className=" bg-gray-800 h-14 my-4 mx-3 rounded-3xl flex flex-col justify-center text-gray-200 backdrop-blur-lg bg-opacity-65 backdrop-opacity-30">
+        <div className="w-full sticky top-0 overflow-hidden ">
+            <div className=" bg-slate-800 h-14 mb-3 mx-1 rounded-3xl flex flex-col justify-center text-gray-200 backdrop-blur-lg bg-opacity-65 backdrop-opacity-30">
                 <div className="flex justify-between items-center">
                     <div 
                         onClick={()=>router.push("/")}
-                        className="text-3xl px-4 font-black ">
+                        className="md:text-3xl sm:text-xl text-lg px-2 font-black ">
                         BLIMP
                     </div>
                     <div className="w-1/2 flex items-center justify-between bg-slate-800 rounded-full p-2 "> 
@@ -81,13 +81,10 @@ function Navbar(){
                                 onChange={(e)=>setSearch(e.target.value)}
                                 placeholder="Search"
                                 type="text" 
-<<<<<<< HEAD
                                 className="rounded-full px-2 -my-3 bg-slate-800 md:w-[150%] sm:w-[60%] w-[70%] max-w-3/4 outline-none " />
-=======
-                                className="rounded-full px-2 -my-3 bg-slate-800 w-[150%] outline-none " />
->>>>>>> parent of 5183ef3 (adding basic responsiveness:)
 
                         </div>
+                        <div>
                         {search ? (
                             <div onClick={()=>setSearch(null)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -100,19 +97,20 @@ function Navbar(){
                             </svg>
                         )
                         }
+                        </div>
                         
                         
                         
                     </div>
                     
-                    <div className="text-xl px-4 font-bold ">
+                    <div className="  shrink px-4 font-bold ">
                         {
                             !(status==="authenticated")?(
                             <>
                                 
-                                <Button name="SignUp" handler={()=>(router.push("/signup"))} />
+                                <Button className="text-sm md:text-xl   " name="SignUp" handler={()=>(router.push("/signup"))} />
                             </>)
-                            :   <Button name="LogOut" handler={LogOut}/>
+                            :   <Button className="text-sm md:text-xl  " name="LogOut" handler={LogOut}/>
                         }
                     </div>
                 </div>

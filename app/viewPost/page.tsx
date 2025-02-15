@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 export default async function ViewPost({searchParams}:any){
     const user=await getServerSession(NextAuth)
     if(!user){
-        redirect("/signin")
+        redirect("/signup")
     }
     const param=await searchParams;
     const {postId}= param
@@ -21,8 +21,8 @@ export default async function ViewPost({searchParams}:any){
     }
     return (
         <>
-        <div className="flex justify-center text-gray-300 ">
-            <div>
+        <div className="flex w-full justify-center text-gray-300 ">
+            <div className="w-[94%] max-w-md">
             <Card className="  max-w-md p-3 pr-5 bg-gray-800">
                 
                     {post?(<>
@@ -32,7 +32,7 @@ export default async function ViewPost({searchParams}:any){
                             userId={post?.user.userId || ""}
                             postId={postId} 
                             fullName={post?.user.fullName} 
-                            username={post.user.username} 
+                            username={post.user.username || ""} 
                             content={post.content} 
                             likes={post.Num_Likes}
                             comments={post.Num_Comments}
@@ -40,7 +40,7 @@ export default async function ViewPost({searchParams}:any){
                             isLiked={post.isLiked}
                         />
                         <Card className=" w-[98%] ">
-                            <div className="p-3 text-lg font-semibold">
+                            <div className="p-3 text-sm md:text-lg font-semibold">
                                 Comments
                             </div>
                             <div className="w-full h-0.5 bg-gray-600"></div>

@@ -33,7 +33,7 @@ export default function BottomNav() {
 
         // Cleanup
         return () => clearInterval(interval)
-    }, [userId]) // Add userId as dependency
+    }, [userId]) // Add userId as 
 
     const navigateTo = (path: string) => {
         try {
@@ -45,14 +45,14 @@ export default function BottomNav() {
 
     const NotificationBadge = ({ count }: { count: number }) => (
         count > 0 ? (
-            <div className="absolute w-5 h-5 bg-red-600 rounded-full right-2 -top-0 text-xs flex justify-center items-center text-gray-200">
+            <div className="absolute w-5 h-5 bg-red-600 rounded-full right-2 -top-0 text-xs flex justify-center items-center text-slate-200">
                 {count}
             </div>
         ) : null
     )
 
     return (
-        <div className="w-[98%] fixed bottom-0 h-9 md:hidden backdrop-blur bg-slate-950/60 flex justify-between items-center  px-10">
+        <div className="w-[100%] fixed bottom-0 h-9 sm:hidden backdrop-blur bg-slate-950/60 flex justify-between items-center  px-10">
             <button 
                 onClick={() => navigateTo("/messages")}
                 className="relative p-2"
@@ -65,7 +65,7 @@ export default function BottomNav() {
                     viewBox="0 0 24 24" 
                     strokeWidth={1.5} 
                     stroke="currentColor" 
-                    className="size-7 text-gray-200"
+                    className="size-7 text-slate-200"
                 >
                     <path 
                         strokeLinecap="round" 
@@ -86,7 +86,7 @@ export default function BottomNav() {
                     viewBox="0 0 24 24" 
                     strokeWidth={1.5} 
                     stroke="currentColor" 
-                    className="size-8 text-gray-200"
+                    className="size-8 text-slate-200"
                 >
                     <path 
                         strokeLinecap="round" 
@@ -107,7 +107,7 @@ export default function BottomNav() {
                     viewBox="0 0 24 24" 
                     strokeWidth={1.5} 
                     stroke="currentColor" 
-                    className="size-7 text-gray-200"
+                    className="size-7 text-slate-200"
                 >
                     <path 
                         strokeLinecap="round" 

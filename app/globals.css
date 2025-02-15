@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+
 .otpInput{
     @apply bg-gray-600 w-14 h-14 p-2 m-2 rounded outline-none appearance-none focus:ring-2 ring-gray-50 text-2xl text-center
 }
@@ -30,3 +34,6 @@ textarea{
     -webkit-user-select: none;
     -moz-user-select: none;
 }
+
+
+

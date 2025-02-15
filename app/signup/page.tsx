@@ -75,6 +75,10 @@ export default function SignUp() {
 
     return (
         <div className="w-screen h-[80%] flex items-center justify-center">
+            <div>
+            <div className="text-slate-100 w-full flex sm:text-3xl text-2xl justify-center">
+                Login To Account
+            </div>
             <div className="flex flex-col h-full justify-center">
                 <Card className="bg-slate-700">
                     {step === 1 ? (
@@ -89,7 +93,7 @@ export default function SignUp() {
                                     <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"/>
                                     <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"/>
                                 </svg>
-                                <div className="px-3 mx-2 text-lg font-bold text-slate-300">
+                                <div className="px-3 mx-2 md:text-lg text-sm font-bold text-slate-300">
                                     CONTINUE WITH GOOGLE
                                 </div>
                             </div>
@@ -107,7 +111,9 @@ export default function SignUp() {
                             onSubmit={registerUser}
                         />
                     ) : null}
+                    
                 </Card>
+                </div>
             </div>
         </div>
     );

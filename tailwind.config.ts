@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        chirp:['Sora','san-serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

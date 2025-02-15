@@ -21,7 +21,7 @@ export default function CreateBlimp(){
     const [file,setFile]=useState<File |null>(null)
     const [image,setImage]=useState<string | ArrayBuffer | null>(null)
     if(status==="unauthenticated"){
-        router.push("/signin")
+        router.push("/signup")
         return
     }
     const handleFileChange=(e:any)=>{
@@ -69,32 +69,22 @@ export default function CreateBlimp(){
     return(
         <>
             <div className="w-[98%] h-[90%]">
-                <Card className="m-2 mr-4 ">
+                <Card className=" bg-transparent m-2 mr-4 ">
                     
                     <div className="flex w-full justify-center">
                         
                         <div className=" flex w-full max-w-md    justify-center">
-                        <Card className="p-2 m-2 border  pb-12 border-gray-400">
-                            <div className="p-1 mx-12 text-2xl font-bold text-gray-200">Drop a Blimp</div>
-                            <div className="flex w-full h-[60%]">
-                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                fill="black" 
-                                viewBox="0 0 24 24" 
-                                strokeWidth={1.5} 
-                                stroke="white" 
-                                className="  size-12 ">
-                            <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
+                        <Card className="p-2 m-2 border bg-transparent  pb-12 border-slate-950">
+                            <div className="p-1  md:text-2xl font-bold  text-gray-200">Drop a Blimp</div>
+                            <div className="flex w-full h-[60%] -ml-0.5">
+                            
 
-                            <div className="w-[85%]">
+                            <div className="w-[99%] mr-1">
 
                             <textarea
                                 value={post} 
                                 onChange={(e)=>setPost(e.target.value)} 
-                                className="w-full max-h-36 h-36 bg-gray-600 rounded-xl text-xl py-2 p-3 m-1 outline-none"
+                                className="w-full max-h-36 h-36 bg-slate-900 rounded-xl md:text-xl text-sm py-2 p-3 m-1 outline-none text-slate-100 shadow-md shadow-slate-800"
                                 placeholder="What's happening ?"   
                             />
                             {image && (<div className="w-64  flex justify-center max-h-64 px-2  overflow-hidden pb-3 mb-3">
@@ -116,13 +106,6 @@ export default function CreateBlimp(){
                                 
                                 />
                                 </div>
-                                
-                                
-                                
-
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="size-7 mx-5">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                </svg>
                             </div>
 
                             <Button name="Post" handler={submit}/>

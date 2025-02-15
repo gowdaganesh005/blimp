@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono,Sora } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/navbar";
 import { ToastContainer } from "react-toastify";
 import SessionWraper from "./components/SessionWrappers";
+import BottomNav from "./components/BottomNavBar";
 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const sora = Sora({
+  
   subsets: ["latin"],
 });
 
@@ -29,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black h-screen w-screen`}
+        className={`${sora.className} antialiased bg-black h-screen w-screen`}
       >
         
         
@@ -37,6 +43,7 @@ export default function RootLayout({
         <SessionWraper>
         <Navbar/>
         {children}
+        <BottomNav/>
         </SessionWraper>
         
         

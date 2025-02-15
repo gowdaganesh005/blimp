@@ -26,7 +26,7 @@ export default async  function Dashboard({searchParams}:any){
     
 
     if(!data){
-        redirect("/signin")
+        redirect("/signup")
     }
     const {user}=data
     const viewUser=await findUserInfo(userId,user.userId)
@@ -61,8 +61,8 @@ export default async  function Dashboard({searchParams}:any){
                         </svg>)
                         }               
                         <div>
-                        <div className="font-bold text-3xl pt-3 px-2">{viewUser?.fullName}</div>
-                        <div className="px-2 font-semibold ">@{viewUser?.username}</div>
+                        <div className="font-bold md:text-3xl text-xl  pt-3 px-2">{viewUser?.fullName}</div>
+                        <div className="px-2 font-semibold  ">@{viewUser?.username}</div>
                         </div>
                         
                         </div>
@@ -72,10 +72,10 @@ export default async  function Dashboard({searchParams}:any){
                         {isOwnUser?(<EditButton userId={userId}/>):(<></>)}
                         <div className="flex justify-between">
                         <div className="flex px-3">
-                            <div className="pr-4 text-lg">
+                            <div className="pr-4 md:text-lg ">
                                 { viewUser?.followerCount } Followers
                             </div>
-                            <div className="pr-4 text-lg">
+                            <div className="pr-4 md:text-lg">
                                 { viewUser?.followingCount } Following
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default async  function Dashboard({searchParams}:any){
                         </div>
                         <div className="w-full h-0.5 bg-gray-600"></div>
                         <div>
-                            <div className=" text-lg px-4 font-semibold">Posts</div>
+                            <div className=" md:text-lg  text-sm px-4 font-semibold">Posts</div>
                         </div>
                         <div className="w-full h-0.5 bg-gray-700"></div>
                         <div>

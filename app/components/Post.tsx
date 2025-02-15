@@ -20,9 +20,9 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
     likes: number
     repost: number
     isLiked:boolean
-    className?:string,
-    imageUrl?:string,
-    profilePhoto?:string
+    className?:string | null,
+    imageUrl?:string | null,
+    profilePhoto?:string | null
 }){
     const router=useRouter()
     const {data:session,status}= useSession()
@@ -56,8 +56,8 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
         <>
         <div 
         
-        className={` w-[99.7%] z-0`}>
-        <Card className={`${className}`}>
+        className={` w-[99%] z-0 bg-slate `}>
+        <Card className={` bg-slate-900 ${className}`}>
             <div
             onClick={()=>router.push(`/dashboard?userId=${userId}`)}
             className="p-1 flex text-gray-200 overflow-y-auto ">
@@ -75,7 +75,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                 </svg>)}
                 <div className="w-full">
                     <div className="flex justify-between w-full">
-                        <div className="px-2 font-medium">
+                        <div className="px-2 text-sm sm:text-base font-medium">
                             {fullName}
                         </div>
                         {/* <div className=" px-2  font-thin text-xs py-1">
@@ -87,7 +87,7 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     </div>
                 </div>
             </div>
-            <div className="pl-12  text-gray-300">
+            <div className="pl-12 pr-1 font-extralight text-sm sm:text-base text-gray-300">
                 <div onClick={()=>router.push(`/viewPost?postId=${postId}`)}>
                     {content}
                 </div>
@@ -102,14 +102,15 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     </div>)
                 }
 
-                <div className="py-3 flex justify-between">
-                    
+                <div className="py-3 flex justify-between ">
+                    <div className="flex gap-5">
                     <div className="flex flex-col items-center w-fit ">
                         <LikeButton postId={postId} likes={likes} isLiked={isLiked}/>
                     </div>
                     
                     <div className="flex flex-col items-center w-fit mx-3">
                         <CommentButton num={comments} postId={postId}/>
+                    </div>
                     </div>
                     {/* <div className="flex flex-col items-center w-fit mx-3">
                         <svg 
@@ -133,12 +134,12 @@ export function Post({userId,postId,fullName,username,content,likes,comments,rep
                     </div> */}
                     <div className="relative flex flex-col w-fit mr-5 z-0">
                         {opt && 
-                            <div className=" absolute bg-gray-900 w-20  overflow-y-visible -mx-16 -my-8 px-2 py-1"
+                            <div className=" absolute bg-gray-700 w-20  overflow-y-visible -mx-16 -my-8 px-2 py-1"
                                  onClick={clickDelete}>
                                 Delete
                             </div>
                         }   
-                        {opt &&  <button onClick={handleClick} 
+                        {loggedUser==userId &&  <button onClick={handleClick} 
                         className=" z-0">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 

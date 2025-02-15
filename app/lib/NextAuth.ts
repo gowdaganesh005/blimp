@@ -1,10 +1,8 @@
 import prisma from "@/prisma/db"
-import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import bcrypt from "bcryptjs"
+
 import { User } from "next-auth"
-import { pages } from "next/dist/build/templates/app-page"
-import { signIn } from "next-auth/react"
+
 
 
 
