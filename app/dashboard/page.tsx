@@ -11,6 +11,7 @@ import findUserInfo from "../lib/serverActions/findUserInfo";
 import Button from "../components/Button";
 import { EditButton } from "../components/ImageEditButton";
 import DmSection from "../components/DmButton";
+import Image from "next/image";
 
 
 
@@ -45,7 +46,7 @@ export default async  function Dashboard({searchParams}:any){
                         
                         <div className="flex justify-between">
                         <div className="flex">
-                        {(viewUser?.profilePhoto)? (<img src={viewUser?.profilePhoto} className="w-24 h-24 rounded-full"/>):
+                        {(viewUser?.profilePhoto)? (<Image alt="Profile photo" src={viewUser?.profilePhoto} className="w-24 h-24 rounded-full"/>):
                         (<svg xmlns="http://www.w3.org/2000/svg" 
                             fill="black" 
                             viewBox="0 0 24 24" 
