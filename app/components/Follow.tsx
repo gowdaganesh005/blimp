@@ -32,9 +32,15 @@ export function Follow({followeeId,followed}:{followeeId:string,followed:boolean
     
     return(
         <>
+<<<<<<< HEAD
         <div className="my-3 ">
             {follow?(<Button className="text-white outline outline-white bg-slate-900 text-xs sm:text-base" name="Following" handler={followAction}/>)
             :(<Button className="text-xs sm:text-base" name="Follow" handler={followAction}/>)}
+=======
+        <div className="my-3">
+            {follow?(<Button name="Following" handler={followAction}/>)
+            :(<Button name="Follow" handler={followAction}/>)}
+>>>>>>> parent of 5183ef3 (adding basic responsiveness:)
             
         </div>
         </>

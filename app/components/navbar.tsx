@@ -81,7 +81,11 @@ function Navbar(){
                                 onChange={(e)=>setSearch(e.target.value)}
                                 placeholder="Search"
                                 type="text" 
+<<<<<<< HEAD
                                 className="rounded-full px-2 -my-3 bg-slate-800 md:w-[150%] sm:w-[60%] w-[70%] max-w-3/4 outline-none " />
+=======
+                                className="rounded-full px-2 -my-3 bg-slate-800 w-[150%] outline-none " />
+>>>>>>> parent of 5183ef3 (adding basic responsiveness:)
 
                         </div>
                         {search ? (
