@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 import { io ,Socket } from "socket.io-client"
 import { fetchMessages, fetchMoreMessage } from "../lib/serverActions/fetchMessages"
-import { timeStamp } from "console"
+
 
 enum MessageType{
     sent = 'sent',
@@ -80,7 +80,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     useEffect(()=>{
         if(status!='unauthenticated' && userId){
             fetchPrevMessages();
-            socket.current = io('http://localhost:8000')
+            socket.current = io()
             
             socket.current.emit('authConnection',userId)
             
@@ -144,7 +144,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     }
     return(
         <>
-        <div className="fixed flex flex-col justify-between  right-0 top-20 -mr-1 m-4 h-[80%] max-w-[100%] sm:max-w-[500px]  w-[99%]   bg-gray-800  rounded-lg opacity-95  ">
+        <div className="fixed flex flex-col justify-between  right-0 top-20 -mr-1 m-4 h-[72%] max-w-[100%] sm:max-w-[500px]  w-[99%]   bg-gray-800  rounded-lg opacity-95  ">
             
             <div className="flex justify-between items-center m-3 bg-black opacity-100 rounded-full px-1  ">
                 <div className="flex gap-3 items-center">

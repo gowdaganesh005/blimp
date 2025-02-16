@@ -42,7 +42,8 @@ export default function ChatPage(){
 
     return (
         <>
-        <div className="w-[98%] min-w-72 min-h-80 mr-1  h-[95%] opacity-100  z-30 rounded-xl">
+        <div className="w-full flex justify-center">
+        <div className="w-full  max-w-lg min-w-72 min-h-80 mr-1  h-[95%] opacity-100  z-30 rounded-xl">
             <div className="flex  text-2xl items-center justify-between w-full bg-gray-600 h-14 m-1 rounded p-4 font-bold mr-2"> 
                 Messages
                 <div
@@ -95,7 +96,7 @@ export default function ChatPage(){
                 </div>
             </div>
             
-
+            </div>
         </div>
         </>
     )

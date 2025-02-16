@@ -116,7 +116,7 @@ function Navbar(){
                 </div>
             </div>
         </div>
-        {search && <SuggestionBox users ={searchedUsers}/>}
+        {search && <SuggestionBox users ={searchedUsers}  setSearch={setSearch}/>}
         
         </>
     )
