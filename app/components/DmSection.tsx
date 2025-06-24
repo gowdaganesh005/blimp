@@ -80,7 +80,7 @@ export function DmSection({profilePhoto,fullName,setChat,viewingUserId}:{profile
     useEffect(()=>{
         if(status!='unauthenticated' && userId){
             fetchPrevMessages();
-            socket.current = io()
+            socket.current = io("http://localhost:8000")
             
             socket.current.emit('authConnection',userId)
             
