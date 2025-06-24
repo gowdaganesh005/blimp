@@ -17,7 +17,9 @@ export async function POST(req:any){
         try {
             const byteData=await file.arrayBuffer()
             const buffer=Buffer.from(byteData)
-            path=`./public/${file.name}`
+            const cleanFileName = file.name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_.]/g, "");
+            const path = `./public/${Date.now()}_${cleanFileName}`;
+
             await writeFile(path,buffer);
             
             console.log("Image uploaded to the  public folder now")

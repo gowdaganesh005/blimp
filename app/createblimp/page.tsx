@@ -61,8 +61,9 @@ export default function CreateBlimp(){
                 return
             }
             
-        } catch (error) {
+        } catch (error:any) {
             toast.error("Error creating the Post")
+            console.log(error)
             return   
         }
     }
