@@ -13,12 +13,12 @@ export async function POST(req:any){
     const file=data.get('image')
     let url:string | null=null;
     if(file!=null){
-        let path
+        let path:string
         try {
             const byteData=await file.arrayBuffer()
             const buffer=Buffer.from(byteData)
             const cleanFileName = file.name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_.]/g, "");
-            const path = `./public/${Date.now()}_${cleanFileName}`;
+            path = `./public/${Date.now()}_${cleanFileName}` || '';
 
             await writeFile(path,buffer);
             
@@ -30,6 +30,7 @@ export async function POST(req:any){
 
             
         }
+        
         
        try {
          url=await FileUpload(path)
