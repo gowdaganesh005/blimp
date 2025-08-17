@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  blimp:
+    build: ./blimp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - blimp-websocket
+      - redis
+
+  blimp-websocket:
+    build: ./blimp-websocket
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    
+  blimp-workers:
+    build: ./blimp-workers
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+
+    
